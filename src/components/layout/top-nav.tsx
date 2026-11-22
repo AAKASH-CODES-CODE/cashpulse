@@ -235,6 +235,7 @@ export function TopNav({
 
           {/* New Invoice Button */}
           <button
+            id="new-invoice-btn"
             type="button"
             onClick={onNewInvoice}
             className="tap-bounce focus-ring-accent group inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-emerald-600/20 hover:from-emerald-400 hover:to-emerald-500 cursor-pointer"

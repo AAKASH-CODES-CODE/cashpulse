@@ -23,6 +23,7 @@ export function SectionNav<T extends string>({ sections, active, onSelect }: Sec
           return (
             <li key={section.id} className="shrink-0">
               <button
+                id={`section-tab-${section.id}`}
                 type="button"
                 aria-pressed={isActive}
                 onClick={() => onSelect(section.id)}

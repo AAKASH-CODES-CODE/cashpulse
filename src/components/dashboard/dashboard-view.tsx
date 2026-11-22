@@ -53,10 +53,11 @@ const PITCH_STEPS: PitchTourStep[] = [
     title: 'Multi-Persona Engine: Designer, Tutor & Clinic',
     category: '🎨 Business Flexibility',
     categoryColor: 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300',
-    body: 'CashPulse adapts instantly to your exact solo business model. Switch in 1 click between Creative Agency, Home Tutor / Coaching, and Small Clinic / Salon. All client rosters, invoices, fee cadences, and milestone deliverables re-seed immediately.',
+    body: 'CashPulse adapts instantly to 3 distinct solo business models. Tap the persona button below to see how client rosters, fee cadences, and deliverables re-seed immediately!',
     highlights: ['3 Solo Business Personas', 'Instant Data & Tone Shift', '100% INR Localized'],
     section: 'overview',
-    actionLabel: 'Switch Persona',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Switch Persona',
   },
   {
     id: 'metric-cards',
@@ -97,7 +98,8 @@ const PITCH_STEPS: PitchTourStep[] = [
     body: 'Designed for the nightmare scenario when 5 clients delay payments simultaneously. Activates emergency cash triage: prioritizes debts by exposure, launches batch WhatsApp chase, and freezes non-essential expenses to rescue +28 days of runway.',
     highlights: ['+28 Days Runway Rescued', 'Ranked Priority Queue', 'Discretionary Expense Freeze'],
     section: 'overview',
-    actionLabel: 'Open Bad Day Protocol',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open Bad Day Protocol',
   },
   {
     id: 'quick-paste',
@@ -108,7 +110,19 @@ const PITCH_STEPS: PitchTourStep[] = [
     body: 'Solo operators agree to terms in messy WhatsApp chats. Simply paste the chat message (e.g. "TechCorp mobile redesign for 45k due Friday") — built-in NLP automatically extracts amount, client name, due date, and locks deliverables.',
     highlights: ['1-Second Deal Ingestion', 'Auto-Parses 45k & Dates', 'Locks Milestone Deliverables'],
     section: 'overview',
-    actionLabel: 'Try Quick Paste',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Try Quick Paste',
+  },
+  {
+    id: 'tab-debt',
+    targetId: 'section-tab-debt',
+    title: '👆 Tap the "Debt Radar" Tab',
+    category: '🎯 Navigation',
+    categoryColor: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
+    body: 'To track who owes you money and detect chronic delay patterns, tap the Debt Radar tab above!',
+    section: 'debt',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open Debt Radar',
   },
   {
     id: 'debt-radar',
@@ -121,6 +135,17 @@ const PITCH_STEPS: PitchTourStep[] = [
     section: 'debt',
   },
   {
+    id: 'tab-forecast',
+    targetId: 'section-tab-forecast',
+    title: '👆 Tap the "Forecast" Tab',
+    category: '🔮 Navigation',
+    categoryColor: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300',
+    body: 'Tap here to open your 90-day Financial Command Center and interactive runway simulation engine.',
+    section: 'forecast',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open Forecast',
+  },
+  {
     id: 'forecast',
     targetId: 'forecast',
     title: 'Financial Command Center & What-If Simulator',
@@ -129,6 +154,70 @@ const PITCH_STEPS: PitchTourStep[] = [
     body: 'Stress-test your cashflow before making commitments. Simulate: "What if my largest client delays by 30 days?" or "What if a payment defaults?" The 90-day curve immediately highlights the exact danger day.',
     highlights: ['90-Day Interactive SVG Chart', 'Simulate Delays & Defaults', 'Zero-Cash Date Warning'],
     section: 'forecast',
+  },
+  {
+    id: 'tab-invoices',
+    targetId: 'section-tab-invoices',
+    title: '👆 Tap the "Invoices" Tab',
+    category: '📄 Navigation',
+    categoryColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+    body: 'Tap here to explore your live invoice ledger, UPI QR codes, and the Encrypted Deliverables Vault.',
+    section: 'invoices',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open Invoices',
+  },
+  {
+    id: 'invoices-table',
+    targetId: 'invoices-table-card',
+    title: 'Live Invoices Ledger & Status Tracking',
+    category: '📄 Invoice Ledger',
+    categoryColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+    body: 'Every invoice is tracked with exact due dates, base amount, GST breakdown, and dynamic status pills (Paid, Pending, Overdue). Hover any row for 1-click WhatsApp follow-up and editing.',
+    highlights: ['Real-Time Status Badges', '18% GST Calculations', '1-Click WhatsApp Follow-up'],
+    section: 'invoices',
+  },
+  {
+    id: 'invoices-vault',
+    targetId: 'first-invoice-vault-pill',
+    title: 'Encrypted Milestone Deliverable Vault',
+    category: '🔒 Escrow Security',
+    categoryColor: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
+    body: 'High-value work (Figma designs, code repos, medical records, question banks) remains securely locked in escrow until the client clears payment. Guarantees zero unpaid handovers.',
+    highlights: ['Asset Escrow Lock', 'Instant Unlock on UPI Confirmation', 'Zero Bad Debt Risk'],
+    section: 'invoices',
+  },
+  {
+    id: 'invoices-pay-page',
+    targetId: 'first-invoice-pay-link',
+    title: 'Dedicated Client Payment Link (/pay/[id])',
+    category: '💳 Instant UPI Pay',
+    categoryColor: 'bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300',
+    body: 'Click any invoice number to open its dedicated checkout landing page with instant NPCI UPI QR code, gross calculation, and deliverable download vault for the client.',
+    highlights: ['Direct NPCI UPI QR', 'Zero Transaction Fees', 'Automatic Confetti Settlement'],
+    section: 'invoices',
+  },
+  {
+    id: 'invoices-new-btn',
+    targetId: 'new-invoice-btn',
+    title: '1-Click New Invoice & Deliverables Setup',
+    category: '⚡ Quick Invoicing',
+    categoryColor: 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300',
+    body: 'Create a new invoice in seconds. Select a client, set milestone deliverables, auto-generate sequential invoice numbers (e.g. INV-2026-007), and auto-calculate GST.',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open New Invoice Modal',
+    highlights: ['Sequential Numbering', 'Milestone File Attachment', 'Free & Pro Tier Limits'],
+    section: 'invoices',
+  },
+  {
+    id: 'tab-tools',
+    targetId: 'section-tab-tools',
+    title: '👆 Tap the "Tools" Tab',
+    category: '🛡️ Navigation',
+    categoryColor: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300',
+    body: 'Tap here to see Safe-to-Spend cash ring-fencing and Client Karma reliability grading.',
+    section: 'tools',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open Tools',
   },
   {
     id: 'safe-to-spend',
@@ -141,26 +230,6 @@ const PITCH_STEPS: PitchTourStep[] = [
     section: 'tools',
   },
   {
-    id: 'invoices',
-    targetId: 'invoices',
-    title: 'Invoices Table & Milestone Deliverable Vault',
-    category: '🔒 Escrow Deliverables',
-    categoryColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
-    body: 'Complete invoice ledger with dedicated /pay/[id] escrow pages. Work files (Figma, code, reports) remain encrypted and locked until the client scans the UPI QR code and clears payment, unlocking instant verified downloads.',
-    highlights: ['Direct NPCI UPI QR Links', 'Encrypted Deliverable Vault', 'Automatic Payment Verification'],
-    section: 'invoices',
-  },
-  {
-    id: 'contractor-deferral',
-    targetId: 'contractor-deferral',
-    title: 'Contractor Expense Deferral & Cash Shield',
-    category: '💼 Expense Optimization',
-    categoryColor: 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
-    body: 'Separates fixed bills (studio rent, server hosting) from flexible vendor payouts. Recommends safe deferral schedules to protect your runway without damaging contractor relationships.',
-    highlights: ['Fixed vs Flexible Categorization', 'Safe Vendor Deferrals', 'Runway Defense Strategy'],
-    section: 'invoices',
-  },
-  {
     id: 'api-console',
     targetId: 'api-console-trigger',
     title: 'Developer REST API, Webhooks & CA CSV',
@@ -169,7 +238,8 @@ const PITCH_STEPS: PitchTourStep[] = [
     body: 'Full-stack serverless architecture running live on Next.js. Inspect live REST endpoints (/api/invoices, /api/health), test real UPI webhooks, and download CA-ready tax ledgers in streamable RFC CSV format.',
     highlights: ['Serverless Route Handlers', 'NPCI UPI Webhook Engine', '1-Click CA Audit CSV Streaming'],
     section: 'overview',
-    actionLabel: 'Open API Console',
+    isTapStep: true,
+    tapActionLabel: 'Tap to Open API Console',
   },
 ];
 
@@ -476,6 +546,8 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
       setQuickPasteOpen(true);
     } else if (actionKey === 'api-console') {
       setApiConsoleOpen(true);
+    } else if (actionKey === 'invoices-new-btn') {
+      setCreateOpen(true);
     }
   };
 
@@ -510,7 +582,8 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
       <div className="flex flex-col gap-6 pb-20 md:pb-0">
         <PitchTour
           steps={PITCH_STEPS}
-          onStepChange={handleTourStep}
+          currentSection={activeSection}
+          onSelectSection={setActiveSection}
           onTriggerAction={handleTriggerTourAction}
         />
         <div id="overview" className={`flex scroll-mt-20 flex-col gap-6 ${sectionClass('overview')}`}>

@@ -1,4 +1,4 @@
-import { Check, MessageCircle, Pencil } from 'lucide-react';
+import { Check, MessageCircle, Pencil, Lock, Unlock, ExternalLink } from 'lucide-react';
 import { getInvoiceStatus } from '../../lib/forecast';
 import { formatDate, formatINR } from '../../lib/money';
 import type { Invoice, InvoiceStatus } from '../../lib/types';
@@ -126,13 +126,13 @@ export function InvoicesTable({
 
   return (
     <>
-      <div className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs md:block">
+      <div id="invoices-table-card" className="hidden overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs md:block">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="sticky top-0 z-10 bg-slate-50/90 text-[11px] uppercase tracking-wide text-slate-500 border-b border-slate-200 backdrop-blur">
+            <thead className="sticky top-0 z-10 bg-slate-50/90 dark:bg-slate-800/90 text-[11px] uppercase tracking-wide text-slate-500 border-b border-slate-200 dark:border-slate-800 backdrop-blur">
               <tr>
-                <th scope="col" className="px-4 py-3 font-medium">Client</th>
-                <th scope="col" className="px-4 py-3 font-medium">Project</th>
+                <th scope="col" className="px-4 py-3 font-medium">Invoice & Client</th>
+                <th scope="col" className="px-4 py-3 font-medium">Project & Vault</th>
                 <th scope="col" className="px-4 py-3 font-medium">Due Date</th>
                 <th scope="col" className="px-4 py-3 text-right font-medium">Amount</th>
                 <th scope="col" className="px-4 py-3 font-medium">Status</th>
@@ -143,34 +143,93 @@ export function InvoicesTable({
               {rows.map((row, index) => {
                 const status = getInvoiceStatus(row, today);
                 const selected = row.id === selectedId;
+                const hasDeliverables = row.deliverables && row.deliverables.length > 0;
+                const isVaultLocked = status !== 'paid' && row.milestoneLocked !== false;
+
                 return (
                   <tr
                     key={row.id}
+                    id={index === 0 ? 'first-invoice-row' : undefined}
                     style={{ animationDelay: `${index * 60}ms` }}
-                    className={`cp-animate-in group border-b border-slate-100 transition-colors duration-200 last:border-b-0 ${
-                      selected ? 'bg-emerald-50/50' : 'hover:bg-slate-50/70'
+                    className={`cp-animate-in group border-b border-slate-100 dark:border-slate-800 transition-colors duration-200 last:border-b-0 ${
+                      selected ? 'bg-emerald-50/50 dark:bg-emerald-950/40' : 'hover:bg-slate-50/70 dark:hover:bg-slate-800/60'
                     }`}
                   >
                     <td className="px-4 py-3.5">
-                      <p className="font-medium text-slate-900">{row.clientName}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-slate-950 dark:text-white">{row.clientName}</span>
+                        <a
+                          id={index === 0 ? 'first-invoice-pay-link' : undefined}
+                          href={`/pay/${row.id}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          title="Open Client UPI Payment Landing Page"
+                          className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                        >
+                          <span>{row.number}</span>
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
                     </td>
-                    <td className="px-4 py-3.5 text-slate-500">{row.project}</td>
-                    <td className="px-4 py-3.5 text-slate-600">{formatDate(row.dueDate)}</td>
-                    <td className="px-4 py-3.5 text-right font-semibold tabular-nums text-slate-900">
+                    <td className="px-4 py-3.5">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-slate-600 dark:text-slate-300 truncate max-w-[200px]">{row.project}</span>
+                        {hasDeliverables && (
+                          <div
+                            id={index === 0 ? 'first-invoice-vault-pill' : undefined}
+                            className="flex items-center gap-1.5"
+                          >
+                            <span
+                              className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold ${
+                                isVaultLocked
+                                  ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900'
+                                  : 'bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900'
+                              }`}
+                            >
+                              {isVaultLocked ? (
+                                <>
+                                  <Lock className="h-3 w-3 text-amber-600" />
+                                  <span>Vault Locked ({row.deliverables?.length} assets)</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Unlock className="h-3 w-3 text-emerald-600" />
+                                  <span>Vault Unlocked</span>
+                                </>
+                              )}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">{formatDate(row.dueDate)}</td>
+                    <td className="px-4 py-3.5 text-right font-bold tabular-nums text-slate-950 dark:text-white">
                       {formatINR(row.amount)}
                     </td>
                     <td className="px-4 py-3.5">
                       <StatusBadge status={status} />
                     </td>
                     <td className="px-4 py-3.5">
-                      <RowActions
-                        row={row}
-                        status={status}
-                        variant="row"
-                        onMarkPaid={onMarkPaid}
-                        onEdit={onEdit}
-                        onChase={onChase}
-                      />
+                      <div className="flex items-center justify-end gap-1">
+                        <a
+                          href={`/pay/${row.id}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`${GHOST_ACTION} text-[11px]`}
+                          title="View /pay/[id] UPI Page"
+                        >
+                          <ExternalLink className="h-3 w-3" />
+                          <span>Pay Page</span>
+                        </a>
+                        <RowActions
+                          row={row}
+                          status={status}
+                          variant="row"
+                          onMarkPaid={onMarkPaid}
+                          onEdit={onEdit}
+                          onChase={onChase}
+                        />
+                      </div>
                     </td>
                   </tr>
                 );
