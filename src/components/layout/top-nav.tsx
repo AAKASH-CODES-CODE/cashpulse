@@ -46,7 +46,11 @@ export function TopNav({
 
   useEffect(() => {
     const isDarkCurrent = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkCurrent);
+    if (isDarkCurrent) {
+      requestAnimationFrame(() => {
+        setIsDark(true);
+      });
+    }
   }, []);
 
   const toggleTheme = () => {

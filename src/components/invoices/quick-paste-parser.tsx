@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sparkles, X, ArrowRight, CheckCircle2, MessageSquare, FileText, Send } from 'lucide-react';
+import { Sparkles, X, ArrowRight, CheckCircle2, MessageSquare, FileText } from 'lucide-react';
 import type { AppState, Invoice } from '@/lib/types';
 import { formatINR } from '@/lib/money';
 

@@ -245,16 +245,6 @@ const PITCH_STEPS: PitchTourStep[] = [
 
 type DashboardSection = 'overview' | 'debt' | 'forecast' | 'recovery' | 'invoices' | 'tools';
 
-/** Maps pitch-tour step ids to dashboard section ids. Unmapped step ids are ignored. */
-const TOUR_STEP_SECTIONS: Partial<Record<string, DashboardSection>> = {
-  overview: 'overview',
-  'debt-radar': 'debt',
-  forecast: 'forecast',
-  recovery: 'recovery',
-  'safe-to-spend': 'tools',
-  invoices: 'invoices',
-};
-
 const SECTIONS: readonly SectionNavItem<DashboardSection>[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'debt', label: 'Debt Radar' },
@@ -528,12 +518,6 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
 
   const sectionClass = (section: DashboardSection): string =>
     section === activeSection ? 'cp-animate-in' : 'hidden';
-
-  const handleTourStep = (step: PitchTourStep): void => {
-    if (step.section !== undefined && step.section !== activeSection) {
-      setActiveSection(step.section);
-    }
-  };
 
   const handleTriggerTourAction = (actionKey: string): void => {
     if (actionKey === 'persona-switcher') {

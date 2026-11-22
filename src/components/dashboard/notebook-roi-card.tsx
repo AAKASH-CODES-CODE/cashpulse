@@ -1,6 +1,6 @@
 'use client';
 
-import { TrendingUp, Clock, Zap, DollarSign, Award } from 'lucide-react';
+import { Clock, Zap, DollarSign, Award } from 'lucide-react';
 
 export function NotebookRoiCard() {
   return (

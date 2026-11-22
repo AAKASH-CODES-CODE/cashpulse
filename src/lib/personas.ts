@@ -1,4 +1,4 @@
-import type { AppState, Client, Expense, Invoice } from './types';
+import type { AppState } from './types';
 
 export type BusinessPersona = 'designer' | 'tutor' | 'clinic';
 

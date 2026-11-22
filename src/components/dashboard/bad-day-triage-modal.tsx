@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AlertTriangle, CheckCircle2, ShieldAlert, Send, Sparkles, TrendingUp, X } from 'lucide-react';
-import type { AppState, Invoice } from '@/lib/types';
+import type { AppState } from '@/lib/types';
 import { formatINR } from '@/lib/money';
 import { buildReminderMessage, buildWhatsAppUrl } from '@/lib/whatsapp';
 
@@ -13,23 +13,17 @@ interface BadDayTriageModalProps {
 }
 
 export function BadDayTriageModal({ isOpen, onClose, state }: BadDayTriageModalProps) {
-  const [selectedInvoices, setSelectedInvoices] = useState<string[]>([]);
   const [blastedInvoices, setBlastedInvoices] = useState<Set<string>>(new Set());
 
   if (!isOpen) return null;
 
   const today = new Date().toISOString().slice(0, 10);
+  const nowMs = new Date(today).getTime();
   const overdueInvoices = state.invoices.filter((inv) => !inv.paidDate && inv.dueDate < today);
   const totalLocked = overdueInvoices.reduce((sum, inv) => sum + inv.amount, 0);
 
   // Client lookup map
   const clientMap = new Map(state.clients.map((c) => [c.id, c]));
-
-  const toggleSelect = (id: string) => {
-    setSelectedInvoices((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  };
 
   const markBlasted = (id: string) => {
     setBlastedInvoices((prev) => new Set([...prev, id]));
@@ -112,7 +106,7 @@ export function BadDayTriageModal({ isOpen, onClose, state }: BadDayTriageModalP
                 const isSent = blastedInvoices.has(inv.id);
                 const delayDays = Math.max(
                   1,
-                  Math.floor((Date.now() - new Date(inv.dueDate).getTime()) / 86400000)
+                  Math.floor((nowMs - new Date(inv.dueDate).getTime()) / 86400000)
                 );
                 const reminderMsg = client
                   ? buildReminderMessage({

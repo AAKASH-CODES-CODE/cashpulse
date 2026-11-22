@@ -1,4 +1,4 @@
-import { PERSONA_DATA, BusinessPersona } from './personas';
+import { PERSONA_DATA } from './personas';
 import type { Invoice, Client, Expense } from './types';
 
 // In-memory server-side state initialized from personas
@@ -46,7 +46,6 @@ function initDB(): ServerDB {
 
 // Global singleton for serverless container warm executions
 declare global {
-  // eslint-disable-next-line no-var
   var __CASHPULSE_SERVER_DB__: ServerDB | undefined;
 }
 

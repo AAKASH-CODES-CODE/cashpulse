@@ -1,6 +1,7 @@
 {
-  "name": "next_scaffold",
-  "version": "0.1.0",
+  "name": "cashpulse",
+  "version": "1.0.0",
+  "description": "CashPulse: The One-Person Back Office",
   "private": true,
   "scripts": {
     "dev": "next dev",

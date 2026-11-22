@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Terminal, Play, X, Check, Copy, RefreshCw, Send, Database } from 'lucide-react';
+import { Terminal, Play, X, Check, Copy, RefreshCw } from 'lucide-react';
 
 interface ApiConsoleDrawerProps {
   isOpen: boolean;

@@ -1,72 +1,7 @@
-Build a modern, high-polish, mobile-first Responsive Web Application named "CashPulse: The One-Person Back Office" designed specifically for Freelancers, Independent Consultants, and Solopreneurs to eliminate cash flow anxiety, track unpaid invoices, and forecast their 30-90 day runway.
-
-Tech Stack:
-- Next.js (App Router), TypeScript, Tailwind CSS, Lucide Icons
-- Recharts (or interactive SVG/Canvas charts for financial runway)
-- LocalStorage persistence with realistic pre-seeded synthetic data so the app works instantly on first load.
-
-Target Persona:
-A solo freelance developer/designer or consultant who manages clients via WhatsApp, struggles with late payments, and cannot predict if they have enough cash for next month's rent and expenses.
-
-Core Requirements & Modules to Build:
-
-1. DASHBOARD ("Who Owes Me, How Much, and Since When?"):
-- Top Metric Cards:
-  * Current Bank Balance (e.g., ₹85,000)
-  * Total Outstanding Invoices (e.g., ₹1,40,000 across 4 clients)
-  * Overdue Amount (highlighted in red, e.g., ₹45,000)
-  * Projected Cash Runway (e.g., 42 Days Remaining)
-- "Action Required Today" Smart Banner:
-  * Highlight the most critical overdue invoice with a prominent "Chase Today" button.
-- Aging Buckets Breakdown:
-  * Visual cards/tabs for: Current (0-15 days), Aging (16-30 days), and Critical (30+ days overdue) with color coding.
-- Invoices List Table / Cards:
-  * Client Name, Project, Due Date, Amount, Status (Paid, Pending, Overdue).
-  * Quick Actions: Mark as Paid, Edit, and "1-Click Chase".
-
-2. SMART 1-CLICK INVOICE CHASE & WHATSAPP GENERATOR:
-- Click on "Chase" opens an assisted reminder drawer/modal:
-  * Tone Selector: "Friendly/Gentle" (before due date), "Firm/Professional" (1-7 days late), "Urgent/Legal" (15+ days late).
-  * Dynamic Message Preview with auto-filled Client Name, Invoice Number, Amount, and UPI/Payment link.
-  * Direct "Send via WhatsApp" button that triggers `https://wa.me/?text=...` with the pre-filled message, plus a "Copy Text" button.
-
-3. INVOICE CREATION & EXPENSE TRACKER:
-- "Create New Invoice" Modal:
-  * Client Name, Phone/WhatsApp Number, Service Description, Amount, Issue Date, Payment Due Date.
-- "Upcoming Bills / Expenses" Section:
-  * Fixed commitments (e.g., Office Rent ₹25,000 due 1st of month, Software Subscriptions ₹4,500, Contractor Pay ₹15,000).
-
-4. 30–90 DAY CASH FORECAST ENGINE:
-- Interactive Runway Line/Area Chart showing projected cash balance over the next 30, 60, and 90 days.
-- It dynamically calculates: Current Cash + Expected Invoice Receipts - Upcoming Bills on their respective due dates.
-- Clear visual indicator for "Danger Zone" if projected cash drops below zero or a ₹20,000 minimum buffer.
-
-5. "WHAT-IF" SCENARIO SIMULATOR (CRITICAL HACKATHON WINNING FEATURE):
-- An interactive simulation card with sliders and toggles:
-  * "What if [Select Key Client] pays [Slider: 5 to 45] days late?"
-  * "What if [Select Invoice] defaults or doesn't pay?"
-- Real-Time Impact:
-  * The Cash Runway chart updates live!
-  * Instant AI-style Action Alert: e.g., "⚠️ If Acme Studios pays 20 days late, your cash balance will hit -₹8,000 on Dec 1st (Rent Day). Recommendation: Chase Acme Studios today with a 3% early-pay discount, or delay Contractor payment by 7 days."
-
-6. BUSINESS VIABILITY & PRICING MODAL (FOR JUDGES):
-- A clean "Pro Plan" pricing banner/modal demonstrating SaaS monetization:
-  * Free Starter Tier: Up to 3 invoices/month, basic tracking.
-  * Pro Tier (₹499/month): Unlimited invoices, automated WhatsApp chase templates, 90-day predictive runway, and What-If scenario simulator.
-
-Pre-seeded Demo Data:
-- Pre-load 5 realistic sample clients (e.g., "Studio Alpha", "TechCorp India", "Craft Media", "Zeta Labs", "Freelance Gig").
-- 2 Paid invoices, 2 Pending upcoming invoices, and 2 Overdue invoices (one 18 days late, one 32 days late).
-- 3 Pre-set upcoming expenses (Rent on 1st, Cloud hosting on 10th).
-- Clear "Reset Demo Data" button in settings/header so judges can test fresh state.
-
-Design & UI Standards:
-- Dark/Light modern theme with sleek Slate/Zinc background and vibrant Emerald (positive cash) / Rose (overdue/risk) accents.
-- Mobile-first responsive layout (collapsible sidebar on desktop, bottom navigation bar on mobile).
-- Ensure 100% working interactions, smooth transitions, and zero broken links.{
+{
   "schemaVersion": 2,
   "createdAt": "2026-11-21T11:11:16.627Z",
-  "updatedAt": "2026-11-21T11:11:16.627Z",
+  "updatedAt": "2026-11-22T20:00:00.000Z",
   "phases": {},
   "settings": {}
 }
