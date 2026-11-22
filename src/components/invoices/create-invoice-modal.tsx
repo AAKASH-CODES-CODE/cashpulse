@@ -38,18 +38,18 @@ type FormErrors = Partial<Record<keyof FormValues, string>>;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 const inputClass =
-  'w-full rounded-xl border bg-zinc-950/60 px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition motion-safe:duration-200 focus:border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/20 focus-visible:ring-2 focus-visible:ring-emerald-400/60 disabled:opacity-40';
+  'w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition motion-safe:duration-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus-visible:ring-2 focus-visible:ring-emerald-500/60 disabled:opacity-40';
 
 function inputBorder(error: string | undefined): string {
-  return error ? 'border-rose-500/60' : 'border-white/10';
+  return error ? 'border-rose-500/80' : 'border-slate-300';
 }
 
-const labelClass = 'mb-1.5 block text-xs font-medium text-zinc-400';
-const errorClass = 'mt-1.5 text-xs text-rose-400';
+const labelClass = 'mb-1.5 block text-xs font-medium text-slate-700';
+const errorClass = 'mt-1.5 text-xs text-rose-600';
 const secondaryButtonClass =
-  'tap-press cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900';
+  'tap-press cursor-pointer rounded-xl border border-slate-200 bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 const primaryButtonClass =
-  'tap-bounce cursor-pointer rounded-xl bg-gradient-to-b from-emerald-400 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-900/30 hover:brightness-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 motion-safe:duration-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:brightness-100';
+  'tap-bounce cursor-pointer rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-emerald-600/20 hover:from-emerald-400 hover:to-emerald-500 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-safe:duration-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none';
 
 function findClient(clients: Client[], name: string): Client | undefined {
   const needle = name.trim().toLowerCase();
@@ -214,7 +214,7 @@ function InvoiceForm({ clients, onClose, onCreate, canCreate, onUpgrade }: Invoi
     <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-4">
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-zinc-950/70 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
         onClick={onClose}
       />
 
@@ -224,17 +224,17 @@ function InvoiceForm({ clients, onClose, onCreate, canCreate, onUpgrade }: Invoi
         role="dialog"
         aria-modal="true"
         aria-labelledby={ids.title}
-        className="spring-dialog relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl border border-white/10 bg-zinc-900/90 p-5 text-zinc-100 shadow-2xl shadow-black/50 ring-1 ring-white/5 backdrop-blur-xl md:rounded-2xl md:p-6"
+        className="spring-dialog relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl border border-slate-200 bg-white p-5 text-slate-900 shadow-2xl shadow-slate-900/15 backdrop-blur-xl md:rounded-2xl md:p-6"
       >
         <div className="mb-5 flex items-center justify-between gap-4">
-          <h2 id={ids.title} className="text-lg font-semibold text-zinc-50">
+          <h2 id={ids.title} className="text-lg font-semibold text-slate-900">
             New invoice
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="tap-press cursor-pointer shrink-0 rounded-full p-2 text-zinc-400 hover:bg-white/10 hover:text-zinc-100 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+            className="tap-press cursor-pointer shrink-0 rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -243,7 +243,7 @@ function InvoiceForm({ clients, onClose, onCreate, canCreate, onUpgrade }: Invoi
         {!canCreate && (
           <div
             role="alert"
-            className="mb-5 flex flex-col gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-4 text-sm text-amber-200 sm:flex-row sm:items-center sm:justify-between"
+            className="mb-5 flex flex-col gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 sm:flex-row sm:items-center sm:justify-between"
           >
             <p>Free plan limit reached: 3 invoices per month.</p>
             <button

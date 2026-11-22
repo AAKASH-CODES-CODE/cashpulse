@@ -57,13 +57,13 @@ function ForecastTooltip({ active, payload }: ForecastTooltipProps) {
   const point = payload?.[0]?.payload;
   if (!active || !point) return null;
   return (
-    <div className="rounded-xl border border-white/10 bg-zinc-900/95 px-3 py-2 text-xs shadow-xl">
-      <p className="font-medium text-zinc-200">{formatDate(point.date)}</p>
-      <p className="mt-1 text-zinc-300">
-        Balance: <span className="font-semibold text-white">{formatINR(point.balance)}</span>
+    <div className="rounded-xl border border-slate-200 bg-white/95 px-3 py-2 text-xs shadow-xl shadow-slate-900/10 backdrop-blur">
+      <p className="font-medium text-slate-900">{formatDate(point.date)}</p>
+      <p className="mt-1 text-slate-600">
+        Balance: <span className="font-semibold text-slate-900">{formatINR(point.balance)}</span>
       </p>
-      <p className="text-emerald-400">Inflow: {formatINR(point.inflow)}</p>
-      <p className="text-rose-400">Outflow: {formatINR(point.outflow)}</p>
+      <p className="text-emerald-700 font-medium">Inflow: {formatINR(point.inflow)}</p>
+      <p className="text-rose-700 font-medium">Outflow: {formatINR(point.outflow)}</p>
     </div>
   );
 }
@@ -120,13 +120,13 @@ export function ForecastChart({ state, scenario, today = new Date() }: ForecastC
   const baselineDeficit = baselinePoints?.find((p) => p.balance < 0);
 
   return (
-    <div className="cp-animate-in flex flex-col gap-4 rounded-2xl border border-white/5 bg-zinc-900/60 p-5">
+    <div className="cp-animate-in flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-base font-semibold text-zinc-100">Cash runway</h3>
+        <h3 className="text-base font-semibold text-slate-900">Cash runway</h3>
         <div
           role="group"
           aria-label="Forecast horizon"
-          className="inline-flex rounded-xl bg-zinc-800/60 p-1"
+          className="inline-flex rounded-xl bg-slate-100 p-1"
         >
           {HORIZONS.map((days) => {
             const active = horizon === days;
@@ -138,8 +138,8 @@ export function ForecastChart({ state, scenario, today = new Date() }: ForecastC
                 onClick={() => setHorizon(days)}
                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                   active
-                    ? 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/30'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white text-emerald-700 font-semibold shadow-xs ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {days} days
@@ -158,22 +158,22 @@ export function ForecastChart({ state, scenario, today = new Date() }: ForecastC
           >
             <defs>
               <linearGradient id="forecastFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={color} stopOpacity={0.35} />
+                <stop offset="0%" stopColor={color} stopOpacity={0.25} />
                 <stop offset="100%" stopColor={color} stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="rgba(0,0,0,0.06)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="date"
               tickFormatter={formatDate}
-              tick={{ fill: '#71717a', fontSize: 12 }}
-              stroke="rgba(255,255,255,0.08)"
+              tick={{ fill: '#64748b', fontSize: 12 }}
+              stroke="rgba(0,0,0,0.12)"
               minTickGap={24}
             />
             <YAxis
               tickFormatter={formatINR}
-              tick={{ fill: '#71717a', fontSize: 12 }}
-              stroke="rgba(255,255,255,0.08)"
+              tick={{ fill: '#64748b', fontSize: 12 }}
+              stroke="rgba(0,0,0,0.12)"
               width={96}
             />
             <Tooltip content={ForecastTooltip} />

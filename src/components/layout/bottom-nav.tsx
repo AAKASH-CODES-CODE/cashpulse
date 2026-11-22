@@ -18,7 +18,7 @@ export function BottomNav<T extends string>({ sections, active, onSelect }: Bott
       aria-label="Section navigation"
       className="fixed inset-x-3 bottom-4 z-40 mx-auto max-w-md md:hidden"
     >
-      <div className="overflow-x-auto rounded-2xl border border-white/10 bg-zinc-900/80 p-1.5 shadow-2xl shadow-black/40 backdrop-blur">
+      <div className="overflow-x-auto rounded-2xl border border-slate-200/90 bg-white/90 p-1.5 shadow-xl shadow-slate-900/10 backdrop-blur">
         <ul className="flex min-w-max gap-1">
           {sections.map(({ id, label }) => {
             const isActive = id === active;
@@ -30,8 +30,8 @@ export function BottomNav<T extends string>({ sections, active, onSelect }: Bott
                   aria-current={isActive ? 'page' : undefined}
                   className={`tap-press cp-focus whitespace-nowrap rounded-xl px-3 py-2 text-xs font-medium transition-colors duration-200 ${
                     isActive
-                      ? 'bg-emerald-400/15 text-emerald-400'
-                      : 'text-zinc-500 hover:text-zinc-50'
+                      ? 'bg-emerald-50 text-emerald-700 font-semibold ring-1 ring-emerald-500/20'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                   }`}
                 >
                   {label}

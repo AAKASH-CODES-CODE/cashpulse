@@ -18,20 +18,20 @@ interface MetricCardProps {
 }
 
 const CARD_SURFACE =
-  'relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/60 bg-gradient-to-br from-white/[0.03] to-transparent p-5 md:p-6 shadow-[0_1px_0_0_rgba(255,255,255,0.03)_inset,0_8px_24px_-12px_rgba(0,0,0,0.6)] transition-[transform,background-color,box-shadow] duration-200 ease-out';
+  'relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 md:p-6 shadow-xs shadow-slate-900/5 transition-[transform,background-color,box-shadow] duration-200 ease-out';
 
 const TONE_CLASSES: Record<Tone, { iconWrap: string; value: string }> = {
   positive: {
-    iconWrap: 'bg-emerald-400/10 text-emerald-400 ring-1 ring-emerald-400/20',
-    value: 'text-emerald-400',
+    iconWrap: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500/20',
+    value: 'text-emerald-700',
   },
   neutral: {
-    iconWrap: 'bg-zinc-800/80 text-zinc-300 ring-1 ring-white/5',
-    value: 'text-zinc-50',
+    iconWrap: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200',
+    value: 'text-slate-900',
   },
   risk: {
-    iconWrap: 'bg-rose-400/10 text-rose-400 ring-1 ring-rose-400/20',
-    value: 'text-rose-400',
+    iconWrap: 'bg-rose-50 text-rose-700 ring-1 ring-rose-300',
+    value: 'text-rose-700',
   },
 };
 
@@ -46,7 +46,7 @@ function MetricCard({ metricKey, label, value, hint, icon: Icon, tone, index, on
       className={`group cp-animate-in cp-focus-card tap-press-subtle ${CARD_SURFACE} w-full cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 motion-safe:hover:-translate-y-0.5 active:scale-[0.98]`}
     >
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-zinc-500 transition-colors group-hover:text-zinc-400">{label}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 transition-colors group-hover:text-slate-700">{label}</p>
         <span
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-200 ease-out group-hover:scale-110 group-hover:rotate-6 ${styles.iconWrap}`}
         >
@@ -56,7 +56,7 @@ function MetricCard({ metricKey, label, value, hint, icon: Icon, tone, index, on
       <p className={`mt-3 text-2xl font-semibold tabular-nums tracking-tight md:text-3xl transition-transform duration-200 group-hover:translate-x-0.5 ${styles.value}`}>
         {value}
       </p>
-      <p className="mt-1 text-xs text-zinc-500">{hint}</p>
+      <p className="mt-1 text-xs text-slate-500">{hint}</p>
     </button>
   );
 }

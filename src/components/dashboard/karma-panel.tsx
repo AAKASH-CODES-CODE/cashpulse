@@ -32,12 +32,12 @@ export interface KarmaPanelProps {
 }
 
 const GRADE_CLASSES: Record<KarmaGrade, string> = {
-  'A+': 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/40',
-  A: 'bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/30',
-  B: 'bg-zinc-700/40 text-zinc-200 ring-1 ring-white/10',
-  C: 'bg-amber-500/10 text-amber-300 ring-1 ring-amber-500/30',
-  D: 'bg-rose-400/10 text-rose-300 ring-1 ring-rose-400/30',
-  F: 'bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/40',
+  'A+': 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-300',
+  A: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
+  B: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200',
+  C: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200',
+  D: 'bg-rose-50 text-rose-700 ring-1 ring-rose-200',
+  F: 'bg-rose-100 text-rose-700 ring-1 ring-rose-300',
 };
 
 export function KarmaPanel({ state, today }: KarmaPanelProps) {
@@ -75,16 +75,16 @@ export function KarmaPanel({ state, today }: KarmaPanelProps) {
 
   if (clients.length === 0) {
     return (
-      <section aria-label="Client karma" className="rounded-2xl border border-white/5 bg-zinc-900/60 p-6">
-        <h3 className="text-base font-semibold text-zinc-100">Client Karma</h3>
-        <p className="mt-2 text-sm text-zinc-400">Add clients and invoices to see payment reliability grades.</p>
+      <section aria-label="Client karma" className="rounded-2xl border border-slate-200 bg-white p-6">
+        <h3 className="text-base font-semibold text-slate-900">Client Karma</h3>
+        <p className="mt-2 text-sm text-slate-600">Add clients and invoices to see payment reliability grades.</p>
       </section>
     );
   }
 
   return (
-    <section aria-label="Client karma" className="cp-animate-in flex flex-col gap-4 rounded-2xl border border-white/5 bg-zinc-900/60 p-5">
-      <h3 className="text-base font-semibold text-zinc-100">Client Karma</h3>
+    <section aria-label="Client karma" className="cp-animate-in flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5">
+      <h3 className="text-base font-semibold text-slate-900">Client Karma</h3>
       <ul className="flex flex-col gap-3">
         {clients.map((client, index) => {
           const karma = karmaFor(state, client.id, today);
@@ -98,10 +98,10 @@ export function KarmaPanel({ state, today }: KarmaPanelProps) {
             <li
               key={client.id}
               style={{ animationDelay: `${index * 60}ms` }}
-              className="cp-animate-in flex flex-col gap-3 rounded-xl border border-white/5 bg-zinc-950/40 p-4"
+              className="cp-animate-in flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4"
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-zinc-100">{client.name}</p>
+                <p className="text-sm font-semibold text-slate-900">{client.name}</p>
                 <span
                   className={`rounded-full px-2.5 py-1 text-xs font-semibold tabular-nums ${GRADE_CLASSES[karma.grade]}`}
                 >
@@ -109,36 +109,36 @@ export function KarmaPanel({ state, today }: KarmaPanelProps) {
                 </span>
               </div>
               {karma.noHistory ? (
-                <p className="text-xs text-zinc-500">No payment history yet</p>
+                <p className="text-xs text-slate-500">No payment history yet</p>
               ) : (
-                <div className="grid grid-cols-2 gap-3 text-xs text-zinc-400">
+                <div className="grid grid-cols-2 gap-3 text-xs text-slate-600">
                   <p>
                     Avg days late:{' '}
-                    <span className="font-medium tabular-nums text-zinc-200">{karma.avgDaysLate.toFixed(1)}</span>
+                    <span className="font-medium tabular-nums text-slate-900">{karma.avgDaysLate.toFixed(1)}</span>
                   </p>
                   <p>
                     On-time rate:{' '}
-                    <span className="font-medium tabular-nums text-zinc-200">{karma.onTimeRate}%</span>
+                    <span className="font-medium tabular-nums text-slate-900">{karma.onTimeRate}%</span>
                   </p>
                 </div>
               )}
 
               {karma.depositAdvice !== null ? (
-                <div className="flex flex-col gap-2 rounded-lg border border-amber-500/20 bg-amber-500/5 p-3">
-                  <p className="text-xs font-medium text-amber-300">{karma.depositAdvice}</p>
-                  <p className="text-xs font-medium uppercase tracking-wide text-zinc-400">Negotiation script</p>
+                <div className="flex flex-col gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                  <p className="text-xs font-medium text-amber-800">{karma.depositAdvice}</p>
+                  <p className="text-xs font-medium uppercase tracking-wide text-slate-600">Negotiation script</p>
                   {largestUnpaid > 0 ? (
-                    <p className="whitespace-pre-wrap text-xs leading-relaxed text-zinc-300">{script}</p>
+                    <p className="whitespace-pre-wrap text-xs leading-relaxed text-slate-700">{script}</p>
                   ) : (
-                    <p className="text-xs text-zinc-500">No open invoice</p>
+                    <p className="text-xs text-slate-600">No open invoice</p>
                   )}
                   <button
                     type="button"
                     onClick={() => handleCopy(client.id, script)}
-                    className={`tap-press cursor-pointer flex w-fit items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 ${
+                    className={`tap-press cursor-pointer flex w-fit items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 ${
                       copied
-                        ? 'cp-animate-in border-emerald-500/40 bg-emerald-500/15 text-emerald-300 scale-105 shadow-sm shadow-emerald-500/20'
-                        : 'border-white/10 bg-white/5 text-zinc-200 hover:bg-white/10 hover:border-white/20'
+                        ? 'cp-animate-in border-emerald-200 bg-emerald-50 text-emerald-700 scale-105 shadow-sm shadow-emerald-500/20'
+                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:border-slate-300'
                     }`}
                   >
                     {copied ? (

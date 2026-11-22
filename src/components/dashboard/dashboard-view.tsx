@@ -377,36 +377,36 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
           <ActionBanner rows={rows} today={today} onChase={handleChase} />
           <section aria-labelledby="chase-today-heading" className="cp-card flex flex-col gap-4">
             <div>
-              <h2 id="chase-today-heading" className="text-base font-semibold text-zinc-50">
+              <h2 id="chase-today-heading" className="text-base font-semibold text-slate-900">
                 Chase today
               </h2>
               <p className="cp-muted text-xs">Overdue invoices, most urgent first</p>
             </div>
             {chaseToday.length === 0 ? (
-              <p className="rounded-xl border border-dashed border-white/10 p-6 text-center text-sm text-zinc-500">
+              <p className="rounded-xl border border-dashed border-slate-200 p-6 text-center text-sm text-slate-500">
                 No overdue invoices. Nothing to chase today.
               </p>
             ) : (
-              <ul className="flex flex-col divide-y divide-white/5">
+              <ul className="flex flex-col divide-y divide-slate-200">
                 {chaseToday.map(({ row, days }) => (
                   <li
                     key={row.id}
                     className="flex items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-zinc-50">{row.clientName}</p>
-                      <p className="text-xs text-zinc-500">
+                      <p className="truncate text-sm font-medium text-slate-900">{row.clientName}</p>
+                      <p className="text-xs text-slate-500">
                         {days} {days === 1 ? 'day' : 'days'} overdue
                       </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-3">
-                      <span className="text-sm font-semibold tabular-nums text-zinc-50">
+                      <span className="text-sm font-semibold tabular-nums text-slate-900">
                         {formatINR(row.amount)}
                       </span>
                       <button
                         type="button"
                         onClick={() => handleChase(row.id)}
-                        className="tap-press inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-rose-500/15 px-3 py-1.5 text-xs font-semibold text-rose-300 ring-1 ring-rose-400/20 hover:bg-rose-500/25 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                        className="tap-press inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 ring-1 ring-rose-200 hover:bg-rose-100 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       >
                         <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
                         Chase
@@ -439,13 +439,13 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
         <section
           id="forecast"
           aria-labelledby="forecast-heading"
-          className={`flex scroll-mt-20 flex-col gap-5 rounded-2xl border border-white/5 bg-zinc-900/60 p-5 md:p-6 ${sectionClass('forecast')}`}
+          className={`flex scroll-mt-20 flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-5 md:p-6 ${sectionClass('forecast')}`}
         >
           <div className="flex flex-col gap-1">
-            <h2 id="forecast-heading" className="text-lg font-semibold text-zinc-50">
+            <h2 id="forecast-heading" className="text-lg font-semibold text-slate-900">
               Financial Command Center
             </h2>
-            <p className="text-sm text-zinc-400">Adjust a client or invoice and watch your runway move.</p>
+            <p className="text-sm text-slate-600">Adjust a client or invoice and watch your runway move.</p>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_340px]">
             <ForecastChart state={state} scenario={scenario} today={today} />
@@ -475,14 +475,14 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
             className="flex scroll-mt-20 flex-col gap-3 lg:col-span-2"
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h2 id="invoices-heading" className="text-lg font-semibold text-zinc-50">
+              <h2 id="invoices-heading" className="text-lg font-semibold text-slate-900">
                 Who owes me
               </h2>
               {activeBucket !== null && (
                 <button
                   type="button"
                   onClick={() => setActiveBucket(null)}
-                  className="tap-press cursor-pointer rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-300 hover:bg-white/10 hover:text-zinc-50 hover:border-white/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="tap-press cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   Clear filter
                 </button>
@@ -572,8 +572,8 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
 /** Placeholder shown until the client-only date exists, so no date-dependent number is rendered from the server. */
 function DashboardSkeleton() {
   const cardClass =
-    'rounded-2xl border border-zinc-800 bg-zinc-900 p-5 shadow-sm';
-  const valueClass = 'mt-2 text-2xl font-semibold text-zinc-600';
+    'rounded-2xl border border-slate-200 bg-white p-5 shadow-sm';
+  const valueClass = 'mt-2 text-2xl font-semibold text-slate-400';
   const labels = ['Current Cash', 'Total Outstanding', 'Overdue Amount', 'Cash Runway'];
 
   return (
@@ -582,17 +582,17 @@ function DashboardSkeleton() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {labels.map((label) => (
           <div key={label} className={cardClass}>
-            <p className="text-xs text-zinc-400">{label}</p>
+            <p className="text-xs text-slate-600">{label}</p>
             <p className={valueClass}>—</p>
           </div>
         ))}
       </div>
       <section className={`flex flex-col gap-4 ${cardClass}`}>
-        <h2 className="text-lg font-semibold text-zinc-50">Financial Command Center</h2>
+        <h2 className="text-lg font-semibold text-slate-900">Financial Command Center</h2>
         <p className={valueClass}>—</p>
       </section>
       <section className={`flex flex-col gap-4 ${cardClass}`}>
-        <h2 className="text-lg font-semibold text-zinc-50">Who owes me</h2>
+        <h2 className="text-lg font-semibold text-slate-900">Who owes me</h2>
         <p className={valueClass}>—</p>
       </section>
     </div>

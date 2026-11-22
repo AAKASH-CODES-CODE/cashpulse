@@ -178,24 +178,24 @@ export function ChaseDrawer({
       aria-labelledby="chase-drawer-title"
     >
       <div
-        className="absolute inset-0 bg-zinc-950/70 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      <div className="spring-dialog relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl border border-white/10 bg-zinc-900/90 text-zinc-100 shadow-2xl shadow-black/50 ring-1 ring-white/5 backdrop-blur-xl md:rounded-2xl">
-        <header className="flex items-start justify-between gap-4 border-b border-white/5 p-5">
+      <div className="spring-dialog relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl border border-slate-200 bg-white text-slate-900 shadow-lg shadow-slate-900/10 ring-1 ring-slate-900/5 backdrop-blur-xl md:rounded-2xl">
+        <header className="flex items-start justify-between gap-4 border-b border-slate-200 p-5">
           <div className="min-w-0">
-            <p className="text-xs font-medium uppercase tracking-wide text-zinc-400">Chase payment</p>
-            <h2 id="chase-drawer-title" className="mt-1 truncate text-lg font-semibold text-zinc-50">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-600">Chase payment</p>
+            <h2 id="chase-drawer-title" className="mt-1 truncate text-lg font-semibold text-slate-900">
               {client?.name ?? 'Unknown client'} · {current.number}
             </h2>
-            <p className="mt-1 text-sm text-zinc-400">
+            <p className="mt-1 text-sm text-slate-600">
               {formatINR(current.amount)} due {formatDate(current.dueDate)}
               {isOverdue ? (
-                <span className="ml-2 font-medium text-rose-400">{daysLate} days overdue</span>
+                <span className="ml-2 font-medium text-rose-700">{daysLate} days overdue</span>
               ) : (
-                <span className="ml-2 font-medium text-emerald-400">Not yet due</span>
+                <span className="ml-2 font-medium text-emerald-700">Not yet due</span>
               )}
             </p>
           </div>
@@ -203,7 +203,7 @@ export function ChaseDrawer({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="tap-press shrink-0 rounded-full p-2 text-zinc-400 hover:bg-white/10 hover:text-zinc-100 active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+            className="tap-press shrink-0 rounded-full p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -211,15 +211,15 @@ export function ChaseDrawer({
 
         <div className="flex-1 space-y-5 overflow-y-auto p-5">
           <section>
-            <p className="mb-2 text-xs font-medium text-zinc-400">Tone</p>
+            <p className="mb-2 text-xs font-medium text-slate-600">Tone</p>
             <div
-              className="relative grid grid-cols-3 gap-1 rounded-xl border border-white/5 bg-zinc-950/60 p-1"
+              className="relative grid grid-cols-3 gap-1 rounded-xl border border-slate-200 bg-slate-50 p-1"
               role="group"
               aria-label="Reminder tone"
             >
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-y-1 rounded-lg bg-zinc-100 shadow-sm motion-safe:transition-[left] motion-safe:duration-300 motion-safe:ease-out"
+                className="pointer-events-none absolute inset-y-1 rounded-lg bg-white shadow-sm ring-1 ring-slate-200 motion-safe:transition-[left] motion-safe:duration-300 motion-safe:ease-out"
                 style={{
                   left: `calc(0.25rem + ${TONE_OPTIONS.findIndex((o) => o.value === tone)} * ((100% - 0.5rem) / 3 + 0.25rem))`,
                   width: 'calc((100% - 0.5rem) / 3)',
@@ -234,11 +234,11 @@ export function ChaseDrawer({
                     aria-pressed={pressed}
                     onClick={() => setToneOverride({ invoiceId: current.id, tone: option.value })}
                     className={`tap-press relative z-10 rounded-lg px-2.5 py-2 text-left cursor-pointer active:scale-95 ${
-                      pressed ? 'text-zinc-900 font-semibold' : 'text-zinc-400 hover:text-zinc-200'
+                      pressed ? 'text-slate-900 font-semibold' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     <span className="block text-sm font-medium">{option.label}</span>
-                    <span className={`block text-xs ${pressed ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                    <span className={`block text-xs ${pressed ? 'text-slate-600' : 'text-slate-500'}`}>
                       {option.hint}
                     </span>
                   </button>
@@ -248,23 +248,23 @@ export function ChaseDrawer({
           </section>
 
           <section>
-            <p className="mb-2 text-xs font-medium text-zinc-400">Message preview</p>
-            <div className="max-h-64 overflow-y-auto whitespace-pre-wrap rounded-xl border border-white/5 bg-zinc-950/60 p-4 font-[inherit] text-sm leading-relaxed text-zinc-300">
+            <p className="mb-2 text-xs font-medium text-slate-600">Message preview</p>
+            <div className="max-h-64 overflow-y-auto whitespace-pre-wrap rounded-xl border border-slate-200 bg-slate-50 p-4 font-[inherit] text-sm leading-relaxed text-slate-700">
               {message}
             </div>
           </section>
 
           <section>
-            <p className="mb-2 text-xs font-medium text-zinc-400">Pay by UPI QR</p>
+            <p className="mb-2 text-xs font-medium text-slate-600">Pay by UPI QR</p>
             <UpiQr payload={paymentLink} />
           </section>
         </div>
 
-        <footer className="space-y-2 border-t border-white/5 p-5">
+        <footer className="space-y-2 border-t border-slate-200 p-5">
           <button
             type="button"
             onClick={handleSend}
-            className="tap-bounce group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-emerald-400 to-emerald-600 px-4 py-3 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-900/30 hover:brightness-110 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 disabled:opacity-40 disabled:shadow-none"
+            className="tap-bounce group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-emerald-600 to-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 hover:brightness-110 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-40 disabled:shadow-none"
           >
             <MessageCircle className="h-4 w-4 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-6" aria-hidden="true" />
             Send via WhatsApp
@@ -274,12 +274,12 @@ export function ChaseDrawer({
             <button
               type="button"
               onClick={handleCopy}
-              className={`tap-press cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 ${
+              className={`tap-press cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                 copyState === 'failed'
-                  ? 'border-rose-500/50 bg-rose-500/10 text-rose-400 hover:bg-rose-500/15'
+                  ? 'border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100'
                   : copyState === 'copied'
-                    ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/20'
-                    : 'border-white/10 bg-white/5 text-zinc-200 hover:bg-white/10'
+                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                    : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'
               }`}
             >
               {copyState === 'copied' ? (
@@ -294,7 +294,7 @@ export function ChaseDrawer({
               <button
                 type="button"
                 onClick={handleMarkPaid}
-                className="tap-press cursor-pointer flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:text-emerald-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+                className="tap-press cursor-pointer flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-emerald-700 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 <CheckCircle2 className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
                 Mark as Paid

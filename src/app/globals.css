@@ -2,19 +2,27 @@
 
 @layer components {
   .cp-card {
-    @apply rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 md:p-6;
+    @apply rounded-2xl border border-slate-200 bg-white p-5 md:p-6 shadow-sm shadow-slate-900/5;
   }
 
   .cp-muted {
-    @apply text-zinc-400;
+    @apply text-slate-600;
   }
 
   .cp-btn-primary {
-    @apply rounded-xl bg-emerald-500 px-4 py-2 text-sm font-medium text-zinc-950 transition hover:bg-emerald-400;
+    @apply rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:from-emerald-400 hover:to-emerald-500;
   }
 
   .cp-focus {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+
+  .cp-surface {
+    @apply bg-white border border-slate-200 shadow-sm;
+  }
+
+  .cp-input {
+    @apply rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-500/30;
   }
 }
 
@@ -64,15 +72,26 @@
 
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --surface: rgb(24 24 27 / 0.6);
-  --border-subtle: rgb(255 255 255 / 0.05);
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --border-subtle: #e2e8f0;
 
-  /* Semantic accents (Tailwind emerald-400 / amber-400 / rose-400) */
-  --accent-positive: #34d399;
-  --accent-warning: #fbbf24;
-  --accent-critical: #fb7185;
+  /* Light premium palette (reusable across components) */
+  --cp-surface: #ffffff;
+  --cp-surface-muted: #f8fafc;
+  --cp-border: #e2e8f0;
+  --cp-ink: #0f172a;
+  --cp-ink-2: #334155;
+  --cp-ink-3: #64748b; /* 4.76:1 on white */
+  --cp-accent: #059669; /* emerald-600 */
+  --cp-accent-strong: #047857;
+  --cp-focus: #10b981;
+
+  /* Semantic accents, darkened to stay readable on white (emerald-600 / amber-700 / rose-600) */
+  --accent-positive: #059669;
+  --accent-warning: #b45309;
+  --accent-critical: #e11d48;
 }
 
 @theme inline {
@@ -84,30 +103,34 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/* Keyboard focus ring: ring-2 ring-emerald-400/60 with a zinc-950 offset */
+/* Keyboard focus ring: ring-2 ring-emerald-500/60 with a white offset */
 @utility focus-ring-accent {
   &:focus-visible {
     outline: none;
     box-shadow:
-      0 0 0 2px #09090b,
-      0 0 0 4px rgb(52 211 153 / 0.6);
+      0 0 0 2px #ffffff,
+      0 0 0 4px rgb(16 185 129 / 0.6);
   }
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scrollbar-width: thin;
-  scrollbar-color: rgb(63 63 70) transparent;
+  scrollbar-color: #cbd5e1 transparent;
 }
 
 body {
   background-color: var(--background);
   background-image:
-    radial-gradient(60rem 32rem at 50% -12%, rgb(52 211 153 / 0.10), transparent 60%),
-    radial-gradient(44rem 30rem at 100% 100%, rgb(251 113 133 / 0.06), transparent 60%);
-  background-attachment: fixed;
+    radial-gradient(1200px 600px at 0% -10%, rgba(16, 185, 129, 0.07), transparent 60%),
+    radial-gradient(1000px 600px at 100% 0%, rgba(14, 165, 233, 0.06), transparent 60%);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+::selection {
+  background-color: #d1fae5;
+  color: #0f172a;
 }
 
 /* Webkit scrollbars */
@@ -121,13 +144,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(63 63 70);
+  background: #cbd5e1;
   border-radius: 9999px;
   border: 2px solid var(--background);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(82 82 91);
+  background: #94a3b8;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -180,7 +203,7 @@ body {
     position: relative;
     z-index: 1;
     transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 18px 40px -14px rgb(0 0 0 / 0.75);
+    box-shadow: 0 18px 40px -14px rgb(15 23 42 / 0.18);
   }
 
   .cp-focus-group:has(.cp-focus-card:hover) .cp-focus-card:not(:hover) {

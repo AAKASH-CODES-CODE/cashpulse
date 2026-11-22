@@ -16,9 +16,9 @@ interface ClientDebt {
 }
 
 const BADGE_CLASSES: Record<AgingBucket, string> = {
-  current: 'bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/30',
-  aging: 'bg-amber-500/10 text-amber-300 ring-1 ring-amber-500/30',
-  critical: 'bg-rose-500/10 text-rose-300 ring-1 ring-rose-500/30',
+  current: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
+  aging: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200',
+  critical: 'bg-rose-50 text-rose-700 ring-1 ring-rose-200',
 };
 
 function buildClientDebts(state: AppState): ClientDebt[] {
@@ -44,17 +44,17 @@ export function DebtRadar({ state, today, onChase }: DebtRadarProps) {
     return (
       <section
         aria-label="Debt radar"
-        className="rounded-2xl border border-white/5 bg-zinc-900/60 p-6 text-center"
+        className="rounded-2xl border border-slate-200 bg-white p-6 text-center"
       >
-        <h3 className="text-base font-semibold text-zinc-100">Debt Radar</h3>
-        <p className="mt-2 text-sm text-zinc-400">No unpaid invoices. Every client is square.</p>
+        <h3 className="text-base font-semibold text-slate-900">Debt Radar</h3>
+        <p className="mt-2 text-sm text-slate-600">No unpaid invoices. Every client is square.</p>
       </section>
     );
   }
 
   return (
     <section aria-label="Debt radar" className="cp-animate-in flex flex-col gap-4">
-      <h3 className="text-base font-semibold text-zinc-100">Debt Radar</h3>
+      <h3 className="text-base font-semibold text-slate-900">Debt Radar</h3>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {debts.map((debt, index) => {
           const days = daysOverdue(debt.oldest.dueDate, today);
@@ -63,12 +63,12 @@ export function DebtRadar({ state, today, onChase }: DebtRadarProps) {
             <article
               key={debt.clientId}
               style={{ animationDelay: `${index * 60}ms` }}
-              className="cp-animate-in flex flex-col gap-3 rounded-2xl border border-white/5 bg-zinc-900/60 p-5"
+              className="cp-animate-in flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-zinc-100">{debt.name}</p>
-                  <p className="mt-1 text-xs text-zinc-500">
+                  <p className="truncate text-sm font-semibold text-slate-900">{debt.name}</p>
+                  <p className="mt-1 text-xs text-slate-500">
                     Oldest invoice due {formatDate(debt.oldest.dueDate)}
                   </p>
                 </div>
@@ -78,11 +78,11 @@ export function DebtRadar({ state, today, onChase }: DebtRadarProps) {
                   {days > 0 ? `${days} days overdue` : 'Not yet due'}
                 </span>
               </div>
-              <p className="text-xl font-semibold tabular-nums text-zinc-50">{formatINR(debt.total)}</p>
+              <p className="text-xl font-semibold tabular-nums text-slate-900">{formatINR(debt.total)}</p>
               <button
                 type="button"
                 onClick={() => onChase(debt.oldest.id)}
-                className="tap-press group flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-zinc-200 active:scale-95 hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+                className="tap-press group flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 active:scale-95 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 <span className="transition-transform duration-200 ease-out group-hover:scale-105">Chase on WhatsApp</span>
               </button>

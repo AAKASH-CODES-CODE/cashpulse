@@ -32,12 +32,12 @@ const DESIGN_PATTERN = /\b([A-Za-z]+\s+design)\b/i;
 const KA_PATTERN = /\bka\s+([^,.]+)/i;
 
 const inputClass =
-  'w-full rounded-xl border bg-zinc-950/60 px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition motion-safe:duration-200 focus:border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/20 focus-visible:ring-2 focus-visible:ring-emerald-400/60 disabled:opacity-40';
-const labelClass = 'mb-1.5 block text-xs font-medium text-zinc-400';
+  'w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition motion-safe:duration-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus-visible:ring-2 focus-visible:ring-emerald-500/60 disabled:opacity-40';
+const labelClass = 'mb-1.5 block text-xs font-medium text-slate-700';
 const secondaryButtonClass =
-  'tap-press cursor-pointer inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900';
+  'tap-press cursor-pointer inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 const primaryButtonClass =
-  'tap-bounce cursor-pointer rounded-xl bg-gradient-to-b from-emerald-400 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-900/30 hover:brightness-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 motion-safe:duration-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:brightness-100';
+  'tap-bounce cursor-pointer rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-emerald-600/20 hover:from-emerald-400 hover:to-emerald-500 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-safe:duration-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none';
 
 /** Local calendar date as YYYY-MM-DD (no UTC conversion, so no off-by-one near midnight). */
 function localIsoDate(date: Date): string {
@@ -177,14 +177,14 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
   return (
     <section
       aria-labelledby={`${uid}-title`}
-      className="rounded-2xl border border-white/10 bg-zinc-900/60 p-5 text-zinc-100 shadow-xl shadow-black/30 ring-1 ring-white/5 backdrop-blur-xl md:p-6"
+      className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-xs md:p-6"
     >
       <div className="mb-4 flex items-center justify-between gap-4">
         <div>
-          <h2 id={`${uid}-title`} className="text-lg font-semibold text-zinc-50">
+          <h2 id={`${uid}-title`} className="text-lg font-semibold text-slate-900">
             Voice to invoice
           </h2>
-          <p className="mt-1 text-xs text-zinc-500">Speak or type the job, review the fields, then create.</p>
+          <p className="mt-1 text-xs text-slate-500">Speak or type the job, review the fields, then create.</p>
         </div>
         <button
           type="button"
@@ -192,25 +192,25 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
           aria-pressed={recording}
           className={secondaryButtonClass}
         >
-          <Mic className={`h-4 w-4 ${recording ? 'text-rose-400' : 'text-emerald-400'}`} aria-hidden="true" />
+          <Mic className={`h-4 w-4 ${recording ? 'text-rose-600' : 'text-emerald-600'}`} aria-hidden="true" />
           {recording ? 'Stop' : 'Record'}
         </button>
       </div>
 
-      <div className="mb-4 flex flex-col items-center gap-3 rounded-xl border border-white/5 bg-zinc-950/50 p-4">
+      <div className="mb-4 flex flex-col items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
         <div aria-hidden="true" className="flex h-12 items-end justify-center gap-1">
           {Array.from({ length: WAVE_BARS }, (_, i) => (
             <span
               key={i}
-              className={`h-2 w-1.5 rounded-full bg-emerald-400/70 ${recording ? 'cp-wave-active' : ''}`}
+              className={`h-2 w-1.5 rounded-full bg-emerald-500/70 ${recording ? 'cp-wave-active' : ''}`}
               style={{ animationDelay: `${(i * 70) % 560}ms` }}
             />
           ))}
         </div>
-        <p className="text-xs font-medium text-zinc-400">
+        <p className="text-xs font-medium text-slate-600">
           {recording ? 'Simulated recording' : 'Not recording'}
         </p>
-        <p className="text-[11px] text-zinc-600">Simulated: no microphone is used.</p>
+        <p className="text-[11px] text-slate-500">Simulated: no microphone is used.</p>
       </div>
 
       <div>
@@ -222,7 +222,7 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
           rows={3}
           value={transcript}
           onChange={(e) => setTranscript(e.target.value)}
-          className={`${inputClass} border-white/10 resize-y`}
+          className={`${inputClass} resize-y`}
         />
         <button type="button" onClick={handleExtract} className={`${primaryButtonClass} mt-3`}>
           Extract details
@@ -230,11 +230,11 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
       </div>
 
       {draft === null ? (
-        <p className="mt-5 text-xs text-zinc-500">Extract details to review the invoice before creating it.</p>
+        <p className="mt-5 text-xs text-slate-500">Extract details to review the invoice before creating it.</p>
       ) : (
-        <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4 border-t border-white/5 pt-5">
+        <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4 border-t border-slate-200 pt-5">
           {!canCreate && (
-            <p role="alert" className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-sm text-amber-200">
+            <p role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
               Upgrade to Pro to create invoices from voice. The free plan allows 3 invoices per month.
             </p>
           )}
@@ -250,7 +250,7 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
                 autoComplete="off"
                 value={draft.client}
                 onChange={(e) => updateDraft('client', e.target.value)}
-                className={`${inputClass} border-white/10`}
+                className={inputClass}
               />
             </div>
             <div>
@@ -262,7 +262,7 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
                 type="text"
                 value={draft.project}
                 onChange={(e) => updateDraft('project', e.target.value)}
-                className={`${inputClass} border-white/10`}
+                className={inputClass}
               />
             </div>
             <div>
@@ -277,7 +277,7 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
                 step={1}
                 value={draft.amount}
                 onChange={(e) => updateDraft('amount', e.target.value)}
-                className={`${inputClass} border-white/10`}
+                className={inputClass}
               />
             </div>
             <div>
@@ -289,7 +289,7 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
                 type="date"
                 value={draft.issueDate}
                 onChange={(e) => updateDraft('issueDate', e.target.value)}
-                className={`${inputClass} border-white/10 [color-scheme:dark]`}
+                className={inputClass}
               />
             </div>
             <div className="md:col-span-2">
@@ -301,13 +301,13 @@ export function VoiceInvoice({ clients, canCreate, onCreate }: VoiceInvoiceProps
                 type="date"
                 value={draft.dueDate}
                 onChange={(e) => updateDraft('dueDate', e.target.value)}
-                className={`${inputClass} border-white/10 [color-scheme:dark]`}
+                className={inputClass}
               />
             </div>
           </div>
 
           {error !== null && (
-            <p role="alert" className="text-xs text-rose-400">
+            <p role="alert" className="text-xs text-rose-600">
               {error}
             </p>
           )}

@@ -104,10 +104,10 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
       <button
         type="button"
         onClick={handleStart}
-        className="tap-bounce group inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 px-5 py-3 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-500/30 hover:brightness-110 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 motion-safe:animate-pulse"
+        className="tap-bounce group inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-emerald-500/20 hover:brightness-110 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-safe:animate-pulse"
       >
         Start 60-second pitch tour
-        <kbd className="rounded-md border border-zinc-950/30 bg-zinc-950/10 px-1.5 py-0.5 font-mono text-[11px]">
+        <kbd className="rounded-md border border-white/40 bg-white/20 px-1.5 py-0.5 font-mono text-[11px] text-white">
           P
         </kbd>
       </button>
@@ -119,7 +119,7 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
             aria-hidden="true"
             className="cp-tour-fade pointer-events-none fixed inset-0 z-40 overflow-hidden"
           >
-            <span className="cp-drop-ripple-el absolute left-1/2 top-1/2 h-[150vmin] w-[150vmin] rounded-full border-2 border-emerald-400/70 bg-emerald-400/10" />
+            <span className="cp-drop-ripple-el absolute left-1/2 top-1/2 h-[150vmin] w-[150vmin] rounded-full border-2 border-emerald-500/70 bg-emerald-500/10" />
           </div>
 
           <div
@@ -127,26 +127,26 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
             role="dialog"
             aria-label="Pitch tour"
             aria-live="polite"
-            className="spring-dialog cp-caption-enter fixed inset-x-4 bottom-24 z-50 mx-auto max-w-md rounded-2xl border border-white/10 bg-zinc-900/90 p-5 text-zinc-100 shadow-2xl shadow-black/50 ring-1 ring-white/5 backdrop-blur-xl md:inset-x-auto md:bottom-6 md:right-6 md:mx-0 md:w-96"
+            className="spring-dialog cp-caption-enter fixed inset-x-4 bottom-24 z-50 mx-auto max-w-md rounded-2xl border border-slate-200 bg-white/95 p-5 text-slate-900 shadow-2xl shadow-slate-900/15 ring-1 ring-slate-900/5 backdrop-blur-xl md:inset-x-auto md:bottom-6 md:right-6 md:mx-0 md:w-96"
           >
             <div className="flex items-center justify-between gap-2">
-              <p className="text-xs font-medium text-emerald-300">
+              <p className="text-xs font-semibold text-emerald-700">
                 Step {index + 1} of {count}
               </p>
               <button
                 type="button"
                 onClick={handleExit}
-                className="tap-press cursor-pointer rounded-lg px-2 py-1 text-xs font-medium text-zinc-400 hover:bg-white/5 hover:text-zinc-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+                className="tap-press cursor-pointer rounded-lg px-2 py-1 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
               >
                 Skip tour
               </button>
             </div>
-            <h3 className="mt-1 text-base font-semibold text-zinc-50">{step.title}</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">{step.body}</p>
+            <h3 className="mt-1 text-base font-semibold text-slate-900">{step.title}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{step.body}</p>
 
-            <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+            <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-slate-200" aria-hidden="true">
               <div
-                className="cp-tour-progress h-full rounded-full bg-emerald-400"
+                className="cp-tour-progress h-full rounded-full bg-emerald-600"
                 style={{
                   animationDuration: `${STEP_DURATION_MS}ms`,
                   animationPlayState: playing ? 'running' : 'paused',
@@ -159,7 +159,7 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
                 type="button"
                 onClick={handleExit}
                 aria-label="Exit pitch tour"
-                className="tap-press cursor-pointer rounded-xl px-3 py-2 text-xs font-medium text-zinc-400 hover:bg-white/5 hover:text-zinc-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+                className="tap-press cursor-pointer rounded-xl px-3 py-2 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
               >
                 Exit
               </button>
@@ -169,7 +169,7 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
                   onClick={handleBack}
                   disabled={index === 0}
                   aria-label="Back to previous step"
-                  className="tap-press cursor-pointer rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-medium text-zinc-200 hover:bg-white/10 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="tap-press cursor-pointer rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Back
                 </button>
@@ -177,7 +177,7 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
                   type="button"
                   onClick={handlePlayPause}
                   aria-label={playing ? 'Pause tour' : 'Play tour'}
-                  className="tap-press cursor-pointer rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-medium text-zinc-200 hover:bg-white/10 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+                  className="tap-press cursor-pointer rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
                 >
                   {playing ? 'Pause' : 'Play'}
                 </button>
@@ -186,7 +186,7 @@ export function PitchTour({ steps, onStepChange }: PitchTourProps) {
                   onClick={handleNext}
                   disabled={index >= count - 1}
                   aria-label="Next step"
-                  className="tap-bounce cursor-pointer rounded-xl bg-gradient-to-b from-emerald-400 to-emerald-600 px-3.5 py-2 text-xs font-semibold text-zinc-950 hover:brightness-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="tap-bounce cursor-pointer rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:from-emerald-400 hover:to-emerald-500 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Next
                 </button>

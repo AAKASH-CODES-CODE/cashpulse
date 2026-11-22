@@ -14,24 +14,24 @@ export function ContractorDeferral({ expenses }: ContractorDeferralProps) {
   return (
     <section
       aria-labelledby="contractor-deferral-title"
-      className="rounded-2xl border border-white/10 bg-zinc-900/60 p-5 text-zinc-100 shadow-xl shadow-black/30 ring-1 ring-white/5 backdrop-blur-xl md:p-6"
+      className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-md shadow-slate-900/10 ring-1 ring-slate-900/5 backdrop-blur-xl md:p-6"
     >
-      <h2 id="contractor-deferral-title" className="text-lg font-semibold text-zinc-50">
+      <h2 id="contractor-deferral-title" className="text-lg font-semibold text-slate-900">
         Contractor payout deferral
       </h2>
-      <p className="mt-1 text-xs text-zinc-500">
+      <p className="mt-1 text-xs text-slate-500">
         Preview recurring contractor payouts moved later by 5, 6 or 7 days. Nothing is changed.
       </p>
 
       {contractors.length === 0 ? (
-        <p className="mt-4 rounded-xl border border-white/5 bg-zinc-950/50 p-4 text-sm text-zinc-400">
+        <p className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
           Tag a bill as contractor to see deferral options.
         </p>
       ) : (
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-white/5 text-xs text-zinc-500">
+              <tr className="border-b border-slate-200 text-xs text-slate-500">
                 <th scope="col" className="py-2 pr-3 font-medium">
                   Bill
                 </th>
@@ -47,18 +47,18 @@ export function ContractorDeferral({ expenses }: ContractorDeferralProps) {
             </thead>
             <tbody>
               {contractors.map((expense) => (
-                <tr key={expense.id} className="border-b border-white/5 last:border-0">
-                  <td className="py-2.5 pr-3 text-zinc-200">{expense.name}</td>
-                  <td className="py-2.5 pr-3 tabular-nums text-zinc-400">{expense.dueDay}</td>
+                <tr key={expense.id} className="border-b border-slate-200 last:border-0">
+                  <td className="py-2.5 pr-3 text-slate-900">{expense.name}</td>
+                  <td className="py-2.5 pr-3 tabular-nums text-slate-600">{expense.dueDay}</td>
                   {DEFERRAL_DAYS.map((days) => (
-                    <td key={days} className="py-2.5 pr-3 tabular-nums text-zinc-200">
+                    <td key={days} className="py-2.5 pr-3 tabular-nums text-slate-900">
                       {contractorDeferral([expense], days).map((proj) => {
                         const shown = Math.min(proj.newDay, MAX_DISPLAY_DAY);
                         return (
                           <span key={`${expense.id}-${days}`}>
                             Day {shown}
                             {proj.newDay > MAX_DISPLAY_DAY && (
-                              <span className="ml-1 text-[11px] text-amber-300">(capped at 28 for display)</span>
+                              <span className="ml-1 text-[11px] text-amber-800">(capped at 28 for display)</span>
                             )}
                           </span>
                         );

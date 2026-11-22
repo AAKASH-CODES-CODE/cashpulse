@@ -34,16 +34,16 @@ function DetailItem({ label, sub, value, emphasis = false }: DetailItemProps) {
   return (
     <li className="flex items-start justify-between gap-4 py-3">
       <div className="min-w-0">
-        <p className={`text-sm ${emphasis ? 'font-semibold text-zinc-50' : 'text-zinc-200'}`}>{label}</p>
-        {sub === undefined ? null : <p className="mt-0.5 text-xs text-zinc-500">{sub}</p>}
+        <p className={`text-sm ${emphasis ? 'font-semibold text-slate-900' : 'text-slate-800'}`}>{label}</p>
+        {sub === undefined ? null : <p className="mt-0.5 text-xs text-slate-500">{sub}</p>}
       </div>
-      <p className={`shrink-0 text-sm tabular-nums text-zinc-100 ${emphasis ? 'font-semibold' : ''}`}>{value}</p>
+      <p className={`shrink-0 text-sm tabular-nums text-slate-900 ${emphasis ? 'font-semibold' : ''}`}>{value}</p>
     </li>
   );
 }
 
 function EmptyNote({ children }: { children: ReactNode }) {
-  return <p className="py-3 text-sm text-zinc-500">{children}</p>;
+  return <p className="py-3 text-sm text-slate-500">{children}</p>;
 }
 
 function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode {
@@ -54,7 +54,7 @@ function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode 
     case 'balance': {
       const s = safeToSpend(state, today);
       return (
-        <ul className="divide-y divide-white/5">
+        <ul className="divide-y divide-slate-100">
           <DetailItem label="Bank balance" value={formatINR(s.bankBalance)} />
           <DetailItem label="Less: rent due in 30 days" value={formatINR(s.lockedRent)} />
           <DetailItem
@@ -75,7 +75,7 @@ function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode 
       if (unpaid.length === 0) return <EmptyNote>No unpaid invoices.</EmptyNote>;
       return (
         <>
-          <ul className="divide-y divide-white/5">
+          <ul className="divide-y divide-slate-100">
             {unpaid.map((inv) => (
               <DetailItem
                 key={inv.id}
@@ -85,7 +85,7 @@ function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode 
               />
             ))}
           </ul>
-          <p className="mt-3 border-t border-white/5 pt-3 text-right text-sm font-semibold text-zinc-50">
+          <p className="mt-3 border-t border-slate-200 pt-3 text-right text-sm font-semibold text-slate-900">
             Total {formatINR(total)}
           </p>
         </>
@@ -99,7 +99,7 @@ function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode 
       if (overdueInvoices.length === 0) return <EmptyNote>Nothing past due.</EmptyNote>;
       return (
         <>
-          <ul className="divide-y divide-white/5">
+          <ul className="divide-y divide-slate-100">
             {overdueInvoices.map((inv) => {
               const days = daysOverdue(inv.dueDate, today);
               return (
@@ -112,7 +112,7 @@ function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode 
               );
             })}
           </ul>
-          <p className="mt-3 border-t border-white/5 pt-3 text-right text-sm font-semibold text-zinc-50">
+          <p className="mt-3 border-t border-slate-200 pt-3 text-right text-sm font-semibold text-slate-900">
             Total {formatINR(total)}
           </p>
         </>
@@ -123,16 +123,16 @@ function renderBody(metric: MetricKey, state: AppState, today: Date): ReactNode 
       const capped = runway >= RUNWAY_HORIZON_DAYS;
       return (
         <>
-          <p className="text-sm text-zinc-300">
+          <p className="text-sm text-slate-700">
             {capped
               ? `No cash breach in the next ${RUNWAY_HORIZON_DAYS} days.`
               : `Balance drops below zero in ${runway} ${runway === 1 ? 'day' : 'days'}.`}
           </p>
-          <p className="mb-1 mt-4 text-[11px] font-medium uppercase tracking-wide text-zinc-500">Recurring bills</p>
+          <p className="mb-1 mt-4 text-[11px] font-medium uppercase tracking-wide text-slate-500">Recurring bills</p>
           {state.expenses.length === 0 ? (
             <EmptyNote>No recurring bills.</EmptyNote>
           ) : (
-            <ul className="divide-y divide-white/5">
+            <ul className="divide-y divide-slate-100">
               {state.expenses.map((e) => (
                 <DetailItem key={e.id} label={e.name} sub={`Due day ${e.dueDay}`} value={formatINR(e.amount)} />
               ))}
@@ -196,24 +196,24 @@ export function MetricDetailDrawer({ metric, state, today, onClose }: MetricDeta
   const titleId = 'metric-detail-title';
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6">
-      <div aria-hidden="true" className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div aria-hidden="true" className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
       <div
         ref={dialogRef}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="spring-dialog relative flex max-h-[85vh] w-full flex-col overflow-hidden rounded-t-2xl border border-white/10 bg-zinc-900 shadow-2xl md:max-w-lg md:rounded-2xl"
+        className="spring-dialog relative flex max-h-[85vh] w-full flex-col overflow-hidden rounded-t-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/15 md:max-w-lg md:rounded-2xl"
       >
-        <div className="flex items-start justify-between gap-3 border-b border-white/5 p-5">
-          <h2 id={titleId} className="text-base font-semibold text-zinc-50">
+        <div className="flex items-start justify-between gap-3 border-b border-slate-100 p-5">
+          <h2 id={titleId} className="text-base font-semibold text-slate-900">
             {TITLES[metric]}
           </h2>
           <button
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="tap-press cursor-pointer rounded-lg p-1.5 text-zinc-400 hover:bg-white/10 hover:text-zinc-100 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="tap-press cursor-pointer rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             <X className="h-4 w-4" aria-hidden="true" />
           </button>

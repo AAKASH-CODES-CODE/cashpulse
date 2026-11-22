@@ -19,12 +19,12 @@ const DELAY_PRESETS = [15, 30, 45] as const;
 const WARNING_PREFIX = '⚠️';
 
 const FOCUS_RING =
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900';
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 
 const TONE_TEXT: Record<DangerLevel, string> = {
-  danger: 'text-rose-400',
-  warning: 'text-amber-400',
-  safe: 'text-emerald-400',
+  danger: 'text-rose-600',
+  warning: 'text-amber-700',
+  safe: 'text-emerald-700',
 };
 
 function lowestBalance(points: readonly { balance: number }[]): number {
@@ -39,8 +39,8 @@ interface StatTileProps {
 
 function StatTile({ label, value, tone }: StatTileProps) {
   return (
-    <div className="cp-grow-x rounded-xl border border-white/5 bg-zinc-950/60 p-3">
-      <p className="text-xs text-zinc-500">{label}</p>
+    <div className="cp-grow-x rounded-xl border border-slate-200 bg-slate-50/70 p-3">
+      <p className="text-xs text-slate-500">{label}</p>
       <p className={`mt-1 text-base font-semibold ${TONE_TEXT[tone]}`}>{value}</p>
     </div>
   );
@@ -126,17 +126,17 @@ export function WhatIfSimulator({
   return (
     <section aria-labelledby="what-if-heading" className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
-        <h3 id="what-if-heading" className="text-base font-semibold text-zinc-100">
+        <h3 id="what-if-heading" className="text-base font-semibold text-slate-900">
           What-If Scenarios
         </h3>
-        <p className="text-sm text-zinc-400">
+        <p className="text-sm text-slate-600">
           Test a late payment or a default and watch your runway respond.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4">
-        <div className="cp-animate-in flex flex-col gap-3 rounded-xl border border-white/5 bg-zinc-950/60 p-4">
-          <label htmlFor="what-if-client" className="text-sm font-medium text-zinc-200">
+        <div className="cp-animate-in flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50/50 p-4">
+          <label htmlFor="what-if-client" className="text-sm font-medium text-slate-900">
             What if this client pays late
           </label>
           <select
@@ -147,7 +147,7 @@ export function WhatIfSimulator({
               setCleared(false);
             }}
             disabled={clientOptions.length === 0}
-            className={`rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 ${FOCUS_RING}`}
+            className={`rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 ${FOCUS_RING}`}
           >
             {clientOptions.length === 0 && <option value="">No unpaid invoices</option>}
             {clientOptions.map((c) => (
@@ -156,8 +156,8 @@ export function WhatIfSimulator({
               </option>
             ))}
           </select>
-          <label htmlFor="what-if-delay" className="text-sm text-zinc-300">
-            <span className="font-semibold text-emerald-400">{delayDays} days late</span>
+          <label htmlFor="what-if-delay" className="text-sm text-slate-700">
+            <span className="font-semibold text-emerald-700">{delayDays} days late</span>
           </label>
           <input
             id="what-if-delay"
@@ -170,7 +170,7 @@ export function WhatIfSimulator({
               setDelayDays(Number(e.target.value));
               setCleared(false);
             }}
-            className={`w-full cursor-pointer accent-emerald-500 rounded-lg ${FOCUS_RING}`}
+            className={`w-full cursor-pointer accent-emerald-600 rounded-lg ${FOCUS_RING}`}
           />
           <div className="flex flex-wrap gap-2" role="group" aria-label="Delay presets">
             {DELAY_PRESETS.map((days) => (
@@ -184,8 +184,8 @@ export function WhatIfSimulator({
                 }}
                 className={`tap-press cursor-pointer rounded-lg border px-3 py-1 text-xs font-medium active:scale-95 ${
                   delayDays === days
-                    ? 'border-emerald-500 bg-emerald-500/15 text-emerald-400 shadow-sm shadow-emerald-500/10'
-                    : 'border-white/10 text-zinc-300 hover:bg-zinc-800/60 hover:border-white/20'
+                    ? 'border-emerald-500/30 bg-emerald-50 text-emerald-700 shadow-xs ring-1 ring-emerald-500/20'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-100 hover:border-slate-300'
                 } ${FOCUS_RING}`}
               >
                 {days} days
@@ -195,10 +195,10 @@ export function WhatIfSimulator({
         </div>
 
         <div
-          className="cp-animate-in flex flex-col gap-3 rounded-xl border border-white/5 bg-zinc-950/60 p-4"
+          className="cp-animate-in flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50/50 p-4"
           style={{ animationDelay: '60ms' }}
         >
-          <label htmlFor="what-if-invoice" className="text-sm font-medium text-zinc-200">
+          <label htmlFor="what-if-invoice" className="text-sm font-medium text-slate-900">
             What if this invoice defaults or doesn&apos;t pay
           </label>
           <select
@@ -210,7 +210,7 @@ export function WhatIfSimulator({
               setDefaulted(false);
               setCleared(false);
             }}
-            className={`rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 ${FOCUS_RING}`}
+            className={`rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 ${FOCUS_RING}`}
           >
             <option value="">None</option>
             {unpaid.map((inv) => {
@@ -223,7 +223,7 @@ export function WhatIfSimulator({
             })}
           </select>
           <div className="flex items-center justify-between gap-3">
-            <span id="what-if-toggle-label" className="text-sm text-zinc-300">
+            <span id="what-if-toggle-label" className="text-sm text-slate-700">
               Assume this invoice defaults
             </span>
             <button
@@ -237,7 +237,7 @@ export function WhatIfSimulator({
                 setCleared(false);
               }}
               className={`tap-press cursor-pointer relative inline-flex h-6 w-11 shrink-0 items-center rounded-full active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 ${
-                toggleActive ? 'bg-rose-500 shadow-sm shadow-rose-500/30' : 'bg-zinc-700'
+                toggleActive ? 'bg-rose-500 shadow-sm shadow-rose-500/30' : 'bg-slate-300'
               } ${FOCUS_RING}`}
             >
               <span
@@ -270,8 +270,8 @@ export function WhatIfSimulator({
           role="status"
           className={`rounded-xl border p-4 text-sm font-medium ${
             isWarning
-              ? 'border-rose-500/40 bg-rose-500/10 text-rose-300'
-              : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+              ? 'border-rose-200 bg-rose-50 text-rose-800'
+              : 'border-emerald-200 bg-emerald-50 text-emerald-800'
           }`}
         >
           {alert}
@@ -282,7 +282,7 @@ export function WhatIfSimulator({
         <button
           type="button"
           onClick={handleReset}
-          className={`tap-press cursor-pointer rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/60 hover:text-zinc-100 hover:border-white/20 active:scale-95 ${FOCUS_RING}`}
+          className={`tap-press cursor-pointer rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 active:scale-95 ${FOCUS_RING}`}
         >
           Reset scenario
         </button>
