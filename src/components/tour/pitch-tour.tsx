@@ -292,7 +292,7 @@ export function PitchTour({
                   )}px at ${rect.cx}px ${rect.cy}px, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0) 35%, rgba(2, 6, 23, 0.28) 60%, rgba(2, 6, 23, 0.62) 82%, rgba(2, 6, 23, 0.82) 100%)`
                 : 'radial-gradient(circle at 50% 50%, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.75) 100%)',
             }}
-            className="fixed inset-0 transition-all duration-500 ease-out backdrop-blur-[1.5px]"
+            className="fixed inset-0 pointer-events-none transition-all duration-500 ease-out backdrop-blur-[1.5px]"
           />
 
           {/* Contextual Popover Card positioned cleanly adjacent to the focused element */}

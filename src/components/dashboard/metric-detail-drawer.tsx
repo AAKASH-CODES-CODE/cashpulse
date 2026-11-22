@@ -195,7 +195,7 @@ export function MetricDetailDrawer({ metric, state, today, onClose }: MetricDeta
 
   const titleId = 'metric-detail-title';
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6">
+    <div className="fixed inset-0 z-[70] flex items-end justify-center md:items-center md:p-6">
       <div aria-hidden="true" className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
       <div
         ref={dialogRef}

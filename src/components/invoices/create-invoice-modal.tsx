@@ -211,7 +211,7 @@ function InvoiceForm({ clients, onClose, onCreate, canCreate, onUpgrade }: Invoi
   const dueError = shownError('dueDate');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-4">
+    <div className="fixed inset-0 z-[70] flex items-end justify-center md:items-center md:p-4">
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
@@ -367,7 +367,7 @@ function InvoiceForm({ clients, onClose, onCreate, canCreate, onUpgrade }: Invoi
                 onChange={(e) => setField('issueDate', e.target.value)}
                 aria-invalid={issueError ? true : undefined}
                 aria-describedby={issueError ? `${ids.issueDate}-error` : undefined}
-                className={`${inputClass} ${inputBorder(issueError)} [color-scheme:dark]`}
+                className={`${inputClass} ${inputBorder(issueError)} dark:[color-scheme:dark]`}
               />
               {issueError && (
                 <p id={`${ids.issueDate}-error`} className={errorClass}>
@@ -388,7 +388,7 @@ function InvoiceForm({ clients, onClose, onCreate, canCreate, onUpgrade }: Invoi
                 onChange={(e) => setField('dueDate', e.target.value)}
                 aria-invalid={dueError ? true : undefined}
                 aria-describedby={dueError ? `${ids.dueDate}-error` : undefined}
-                className={`${inputClass} ${inputBorder(dueError)} [color-scheme:dark]`}
+                className={`${inputClass} ${inputBorder(dueError)} dark:[color-scheme:dark]`}
               />
               {dueError && (
                 <p id={`${ids.dueDate}-error`} className={errorClass}>

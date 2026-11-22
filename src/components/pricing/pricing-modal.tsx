@@ -67,7 +67,7 @@ export function PricingModal(props: PricingModalProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-4">
+    <div className="fixed inset-0 z-[70] flex items-end justify-center md:items-center md:p-4">
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"

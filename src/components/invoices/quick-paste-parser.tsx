@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sparkles, X, ArrowRight, CheckCircle2, MessageSquare, FileText } from 'lucide-react';
 import type { AppState, Invoice } from '@/lib/types';
 import { formatINR } from '@/lib/money';
@@ -27,6 +27,15 @@ export function QuickPasteParser({ isOpen, onClose, state, onAddInvoice }: Quick
   const [loading, setLoading] = useState(false);
   const [parsed, setParsed] = useState<ParsedState | null>(null);
   const [createdInvoice, setCreatedInvoice] = useState<Invoice | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -89,7 +98,12 @@ export function QuickPasteParser({ isOpen, onClose, state, onAddInvoice }: Quick
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in"
+    >
       <div className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-emerald-300 dark:border-emerald-800 bg-white dark:bg-slate-900 shadow-2xl">
         {/* Header */}
         <div className="border-b border-emerald-100 dark:border-emerald-950/50 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 dark:from-emerald-950/40 dark:via-teal-950/20 dark:to-emerald-950/40 p-5">

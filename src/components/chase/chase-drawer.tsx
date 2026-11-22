@@ -172,7 +172,7 @@ export function ChaseDrawer({
     <div
       ref={dialogRef}
       tabIndex={-1}
-      className="fixed inset-0 z-50 flex items-end justify-center focus:outline-none md:items-center md:p-4"
+      className="fixed inset-0 z-[70] flex items-end justify-center focus:outline-none md:items-center md:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="chase-drawer-title"

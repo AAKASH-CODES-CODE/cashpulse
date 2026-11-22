@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AlertTriangle, CheckCircle2, ShieldAlert, Send, Sparkles, TrendingUp, X } from 'lucide-react';
 import type { AppState } from '@/lib/types';
 import { formatINR } from '@/lib/money';
@@ -14,6 +14,15 @@ interface BadDayTriageModalProps {
 
 export function BadDayTriageModal({ isOpen, onClose, state }: BadDayTriageModalProps) {
   const [blastedInvoices, setBlastedInvoices] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -30,7 +39,12 @@ export function BadDayTriageModal({ isOpen, onClose, state }: BadDayTriageModalP
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in"
+    >
       <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-rose-300 dark:border-rose-900 bg-white dark:bg-slate-900 shadow-2xl">
         {/* Header with emergency banner */}
         <div className="border-b border-rose-200 dark:border-rose-950/60 bg-gradient-to-r from-rose-50 via-amber-50 to-rose-50 dark:from-rose-950/40 dark:via-amber-950/30 dark:to-rose-950/40 p-5">

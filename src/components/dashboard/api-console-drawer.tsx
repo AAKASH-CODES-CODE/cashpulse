@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Terminal, Play, X, Check, Copy, RefreshCw } from 'lucide-react';
 
 interface ApiConsoleDrawerProps {
@@ -24,6 +24,15 @@ export function ApiConsoleDrawer({ isOpen, onClose }: ApiConsoleDrawerProps) {
   const [chatPrompt, setChatPrompt] = useState(
     'Hi Aakash, please send invoice for TechCorp mobile redesign for 45k due Friday with figma source code'
   );
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -78,7 +87,12 @@ export function ApiConsoleDrawer({ isOpen, onClose }: ApiConsoleDrawerProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-xs animate-in">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      className="fixed inset-0 z-[70] flex justify-end bg-slate-950/60 backdrop-blur-xs animate-in"
+    >
       <div className="flex h-full w-full max-w-2xl flex-col border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 p-4">

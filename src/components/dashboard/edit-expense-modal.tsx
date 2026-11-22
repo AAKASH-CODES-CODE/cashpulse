@@ -160,7 +160,7 @@ function EditExpenseForm({ expense, onClose, onSave }: EditExpenseFormProps) {
   const categoryError = shownError('category');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-4">
+    <div className="fixed inset-0 z-[70] flex items-end justify-center md:items-center md:p-4">
       <button
         type="button"
         aria-label="Close dialog"
