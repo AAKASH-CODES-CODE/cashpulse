@@ -1,5 +1,6 @@
-import type { AppState, Client, Expense, Invoice, Plan } from './types';
+import type { AppState, BusinessPersona, Client, Expense, Invoice, Plan } from './types';
 import { createSeedState } from './seed';
+import { createPersonaState } from './personas';
 import { toIsoDate } from './money';
 
 export const STORAGE_KEY = 'cashpulse:v1';
@@ -212,3 +213,10 @@ export function setPlan(state: AppState, plan: Plan): AppState {
 export function canCreateInvoice(state: AppState, now: Date = new Date()): boolean {
   return canIssueInMonth(state, toIsoDate(now).slice(0, 7));
 }
+
+export function switchPersona(persona: BusinessPersona): AppState {
+  const next = createPersonaState(persona);
+  saveState(next);
+  return next;
+}
+

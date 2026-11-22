@@ -73,25 +73,75 @@
 
 :root {
   --background: #f8fafc;
-  --foreground: #0f172a;
+  --foreground: #020617;
   --surface: #ffffff;
-  --border-subtle: #e2e8f0;
+  --border-subtle: #cbd5e1;
 
-  /* Light premium palette (reusable across components) */
+  /* High-Contrast Light premium palette */
   --cp-surface: #ffffff;
-  --cp-surface-muted: #f8fafc;
-  --cp-border: #e2e8f0;
-  --cp-ink: #0f172a;
-  --cp-ink-2: #334155;
-  --cp-ink-3: #64748b; /* 4.76:1 on white */
+  --cp-surface-muted: #f1f5f9;
+  --cp-border: #cbd5e1;
+  --cp-ink: #020617;
+  --cp-ink-2: #1e293b;
+  --cp-ink-3: #475569;
   --cp-accent: #059669; /* emerald-600 */
   --cp-accent-strong: #047857;
   --cp-focus: #10b981;
 
-  /* Semantic accents, darkened to stay readable on white (emerald-600 / amber-700 / rose-600) */
-  --accent-positive: #059669;
-  --accent-warning: #b45309;
-  --accent-critical: #e11d48;
+  /* Semantic accents, ultra-deep and crisp for light backgrounds */
+  --accent-positive: #047857;
+  --accent-warning: #9a3412;
+  --accent-critical: #be123c;
+}
+
+html.dark {
+  color-scheme: dark;
+  --background: #090d16;
+  --foreground: #f8fafc;
+  --surface: #0f172a;
+  --border-subtle: #1e293b;
+
+  --cp-surface: #0f172a;
+  --cp-surface-muted: #1e293b;
+  --cp-border: #334155;
+  --cp-ink: #f8fafc;
+  --cp-ink-2: #cbd5e1;
+  --cp-ink-3: #94a3b8;
+  --cp-accent: #10b981;
+  --cp-accent-strong: #34d399;
+
+  --accent-positive: #34d399;
+  --accent-warning: #fbbf24;
+  --accent-critical: #f87171;
+}
+
+html.dark body {
+  background-color: #090d16;
+  background-image:
+    radial-gradient(1200px 600px at 0% -10%, rgba(16, 185, 129, 0.12), transparent 60%),
+    radial-gradient(1000px 600px at 100% 0%, rgba(14, 165, 233, 0.10), transparent 60%);
+  color: #f8fafc;
+}
+
+html.dark .cp-card {
+  background-color: #0e1726;
+  border-color: #1e293b;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .cp-surface {
+  background-color: #0e1726;
+  border-color: #1e293b;
+}
+
+html.dark .cp-input {
+  background-color: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+html.dark .cp-muted {
+  color: #94a3b8;
 }
 
 @theme inline {

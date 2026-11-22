@@ -1,7 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
-import type { AppState, Client, Expense, Invoice, Plan } from './types';
+import type { AppState, BusinessPersona, Client, Expense, Invoice, Plan } from './types';
 import { createSeedState } from './seed';
 import * as store from './store';
 
@@ -102,6 +102,9 @@ export function useCashPulseStore() {
     },
     resetDemoData: (): void => {
       commit(createSeedState());
+    },
+    switchPersona: (persona: BusinessPersona): void => {
+      commit(store.switchPersona(persona));
     },
   };
 }

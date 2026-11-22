@@ -1,3 +1,5 @@
+export type BusinessPersona = 'designer' | 'tutor' | 'clinic';
+
 export interface Client {
   id: string;
   name: string;
@@ -54,6 +56,7 @@ export interface AppState {
   expenses: Expense[];
   bankBalance: number;
   plan: Plan;
+  persona?: BusinessPersona;
   /** Invoices issued per 'YYYY-MM' (issueDate month). Survives deletions; optional for older saved data. */
   issuedCounts?: Record<string, number>;
   updatedAt: string;
