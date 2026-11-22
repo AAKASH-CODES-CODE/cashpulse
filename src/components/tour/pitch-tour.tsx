@@ -131,6 +131,14 @@ export function PitchTour({
     setIndex(0);
   }, [count]);
 
+  // Auto-start automatically whenever the website loads
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      handleStart();
+    }, 800);
+    return () => window.clearTimeout(timer);
+  }, [handleStart]);
+
   const handleNext = useCallback(() => {
     setIndex((prev) => (prev === null ? null : Math.min(prev + 1, count - 1)));
   }, [count]);
