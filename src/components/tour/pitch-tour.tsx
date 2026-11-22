@@ -12,7 +12,6 @@ import {
   Compass,
   Zap,
   Hand,
-  Lightbulb,
 } from 'lucide-react';
 
 export interface PitchTourStep {
@@ -83,11 +82,10 @@ export function PitchTour({
       return;
     }
 
-    const padding = 8;
-    const top = Math.max(0, r.top - padding);
-    const left = Math.max(0, r.left - padding);
-    const width = r.width + padding * 2;
-    const height = r.height + padding * 2;
+    const top = Math.max(0, r.top);
+    const left = Math.max(0, r.left);
+    const width = r.width;
+    const height = r.height;
 
     setRect({
       top,
@@ -98,10 +96,10 @@ export function PitchTour({
       cy: top + height / 2,
     });
 
-    // Placement detection
-    const spaceBelow = window.innerHeight - r.bottom;
-    const spaceAbove = r.top;
-    const estimatedCardHeight = 330;
+    // Smart placement detection
+    const spaceBelow = window.innerHeight - (top + height);
+    const spaceAbove = top;
+    const estimatedCardHeight = 310;
 
     if (spaceBelow >= estimatedCardHeight + 20) {
       setPopoverPlacement('bottom');
@@ -155,19 +153,16 @@ export function PitchTour({
   const handlePerformTap = useCallback(() => {
     if (!activeStep) return;
 
-    // If it's a tab-switching step, switch to the target section
     if (activeStep.section && activeStep.isTapStep) {
       onSelectSection(activeStep.section);
     }
 
-    // Trigger action callback if defined
     if (activeStep.onAction) {
       activeStep.onAction();
     } else if (onTriggerAction) {
       onTriggerAction(activeStep.id);
     }
 
-    // Automatically advance to the inside step
     setTimeout(() => {
       handleNext();
     }, 250);
@@ -209,12 +204,10 @@ export function PitchTour({
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [index, activeStep, handleStart, handleNext, handleBack, handleExit, handlePlayPause, handlePerformTap]);
 
-  // Handle active step transition: ensure section is rendered, scroll, and light torch
+  // Handle active step transition: ensure section is rendered, scroll smoothly, and update focus
   useEffect(() => {
     if (index === null || !activeStep) return;
 
-    // If the step belongs to a section and is NOT a tap step to open that section,
-    // ensure the section is currently active
     if (activeStep.section && !activeStep.isTapStep && activeStep.section !== currentSection) {
       onSelectSection(activeStep.section);
     }
@@ -244,7 +237,7 @@ export function PitchTour({
 
   return (
     <>
-      {/* Tour Banner */}
+      {/* Tour Launch Banner */}
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-emerald-200/90 dark:border-emerald-800/80 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-emerald-500/5 p-3.5 sm:p-4 backdrop-blur-xs">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20">
@@ -253,14 +246,14 @@ export function PitchTour({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-bold text-slate-950 dark:text-white">
-                Interactive Torchlight Tour (60s Guide)
+                Interactive Guided Tour (60s Walkthrough)
               </h3>
               <span className="rounded-full bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:text-emerald-300">
                 18 Interactive Steps
               </span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400">
-              Shines a focused flashlight beam on each feature with tap-to-explore steps for every section.
+              Soft ambient focus with step-by-step interactive walkthrough for every feature.
             </p>
           </div>
         </div>
@@ -271,87 +264,30 @@ export function PitchTour({
           className="tap-bounce group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-emerald-600/20 hover:from-emerald-500 hover:to-teal-500 cursor-pointer"
         >
           <Sparkles className="h-4 w-4 transition-transform group-hover:rotate-12" />
-          <span>Start Torch Tour</span>
+          <span>Start Guided Tour</span>
           <kbd className="rounded border border-white/40 bg-white/20 px-1 py-0.5 font-mono text-[10px] text-white">
             P
           </kbd>
         </button>
       </div>
 
-      {/* Torchlight Illumination Layer */}
+      {/* Seamless Radial Vignette Layer (Zero harsh borders, zero box, corners gradually darken smoothly) */}
       {index !== null && activeStep && (
-        <div className="fixed inset-0 z-50 pointer-events-none animate-in fade-in duration-200">
-          {/* Authentic SVG Torch Beam Mask */}
-          {rect && (
-            <svg
-              className="fixed inset-0 h-full w-full pointer-events-none z-40 transition-all duration-300 ease-out"
-              style={{ minHeight: '100vh', minWidth: '100vw' }}
-            >
-              <defs>
-                {/* Radial Gradient creating the focused flashlight beam */}
-                <radialGradient
-                  id="torchBeamCutout"
-                  cx={rect.cx}
-                  cy={rect.cy}
-                  rx={rect.width / 2 + 24}
-                  ry={rect.height / 2 + 24}
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop offset="0%" stopColor="#000" stopOpacity="1" />
-                  <stop offset="68%" stopColor="#000" stopOpacity="1" />
-                  <stop offset="85%" stopColor="#000" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#000" stopOpacity="0" />
-                </radialGradient>
+        <div className="fixed inset-0 z-50 pointer-events-none animate-in fade-in duration-300">
+          {/* Smooth radial gradient falloff - center is 100% clear & bright, corners softly darken */}
+          <div
+            style={{
+              background: rect
+                ? `radial-gradient(ellipse ${Math.max(rect.width * 0.9, 360)}px ${Math.max(
+                    rect.height * 0.9,
+                    240
+                  )}px at ${rect.cx}px ${rect.cy}px, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0) 35%, rgba(2, 6, 23, 0.28) 60%, rgba(2, 6, 23, 0.62) 82%, rgba(2, 6, 23, 0.82) 100%)`
+                : 'radial-gradient(circle at 50% 50%, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.75) 100%)',
+            }}
+            className="fixed inset-0 transition-all duration-500 ease-out backdrop-blur-[1.5px]"
+          />
 
-                <mask id="darknessWithTorchMask">
-                  {/* Full white canvas = solid darkness */}
-                  <rect width="100%" height="100%" fill="white" />
-                  {/* Black ellipse = transparent beam hole revealing the element! */}
-                  <ellipse
-                    cx={rect.cx}
-                    cy={rect.cy}
-                    rx={rect.width / 2 + 24}
-                    ry={rect.height / 2 + 24}
-                    fill="url(#torchBeamCutout)"
-                  />
-                </mask>
-              </defs>
-
-              {/* Dark Night Sky / Room backdrop */}
-              <rect
-                width="100%"
-                height="100%"
-                fill="#050811"
-                opacity="0.84"
-                mask="url(#darknessWithTorchMask)"
-              />
-            </svg>
-          )}
-
-          {/* Luminous Torch Halo Ring & Beam Badge */}
-          {rect && (
-            <div
-              style={{
-                position: 'fixed',
-                top: `${rect.top - 8}px`,
-                left: `${rect.left - 8}px`,
-                width: `${rect.width + 16}px`,
-                height: `${rect.height + 16}px`,
-              }}
-              className="pointer-events-none z-40 rounded-2xl border-2 border-emerald-400/90 shadow-[0_0_60px_rgba(52,211,153,0.45),inset_0_0_35px_rgba(16,185,129,0.18)] transition-all duration-300 ease-out"
-            >
-              {/* Floating Torch Emitter Badge */}
-              <div className="absolute -top-3.5 left-4 flex items-center gap-1.5 rounded-full bg-slate-950 border border-emerald-500/80 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 shadow-xl">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                </span>
-                <span>🔦 Torch Beam Active</span>
-              </div>
-            </div>
-          )}
-
-          {/* Contextual Popover Card positioned adjacent to the spotlighted element */}
+          {/* Contextual Popover Card positioned cleanly adjacent to the focused element */}
           <div
             ref={popoverRef}
             style={
@@ -360,23 +296,27 @@ export function PitchTour({
                     position: 'fixed',
                     top:
                       popoverPlacement === 'bottom'
-                        ? `${Math.min(window.innerHeight - 350, rect.top + rect.height + 14)}px`
+                        ? `${Math.min(window.innerHeight - 340, rect.top + rect.height + 12)}px`
                         : popoverPlacement === 'top'
-                        ? `${Math.max(16, rect.top - 330)}px`
+                        ? `${Math.max(16, rect.top - 320)}px`
                         : 'auto',
-                    bottom: popoverPlacement === 'floating' ? '24px' : 'auto',
-                    left: `${Math.max(
-                      16,
-                      Math.min(window.innerWidth - 440, rect.left + rect.width / 2 - 210)
-                    )}px`,
+                    bottom: popoverPlacement === 'floating' ? '20px' : 'auto',
+                    left:
+                      typeof window !== 'undefined' && window.innerWidth < 640
+                        ? '16px'
+                        : `${Math.max(
+                            16,
+                            Math.min(window.innerWidth - 440, rect.left + rect.width / 2 - 210)
+                          )}px`,
+                    right: typeof window !== 'undefined' && window.innerWidth < 640 ? '16px' : 'auto',
                   }
                 : {
                     position: 'fixed',
-                    bottom: '24px',
-                    right: '24px',
+                    bottom: '20px',
+                    right: '20px',
                   }
             }
-            className="pointer-events-auto z-50 w-[92vw] max-w-[430px] rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 p-5 text-slate-950 dark:text-white shadow-2xl backdrop-blur-xl animate-in zoom-in-95 duration-200"
+            className="pointer-events-auto z-50 w-full sm:max-w-[420px] rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 p-5 text-slate-950 dark:text-white shadow-2xl backdrop-blur-xl animate-in zoom-in-95 duration-200"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-3">
