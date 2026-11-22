@@ -9,8 +9,9 @@ import {
   createId,
 } from '../../lib/store';
 import { buildCaCsv } from '../../lib/intelligence';
-import { agingBucket, type AgingBucket } from '../../lib/forecast';
-import { daysOverdue } from '../../lib/money';
+import { MessageCircle } from 'lucide-react';
+import { agingBucket, getInvoiceStatus, type AgingBucket } from '../../lib/forecast';
+import { daysOverdue, formatINR } from '../../lib/money';
 import type { Plan, Scenario } from '../../lib/types';
 import { ChaseDrawer } from '../chase/chase-drawer';
 import { StallDetector } from '../chase/stall-detector';
@@ -30,6 +31,7 @@ import { ActionBanner } from './action-banner';
 import { AgingBuckets } from './aging-buckets';
 import { ContractorDeferral } from './contractor-deferral';
 import { DebtRadar } from './debt-radar';
+import { EditExpenseModal, type EditExpensePatch } from './edit-expense-modal';
 import { ExpensesPanel } from './expenses-panel';
 import { InvoicesTable, type InvoiceRow } from './invoices-table';
 import { KarmaPanel } from './karma-panel';
@@ -153,6 +155,7 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
     addClient,
     addInvoice,
     updateInvoice,
+    updateExpense,
     deleteExpense,
     setPlan,
     resetDemoData,
@@ -161,6 +164,7 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [chaseInvoiceId, setChaseInvoiceId] = useState<string | null>(null);
   const [editInvoiceId, setEditInvoiceId] = useState<string | null>(null);
+  const [editExpenseId, setEditExpenseId] = useState<string | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [pricingOpen, setPricingOpen] = useState(false);
   const [scenario, setScenario] = useState<Scenario | undefined>(undefined);
@@ -207,8 +211,26 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
       ? ''
       : (state.clients.find((c) => c.id === editInvoice.clientId)?.name ?? 'Unknown client');
 
+  const editExpense = useMemo(
+    () =>
+      editExpenseId === null
+        ? null
+        : (state.expenses.find((e) => e.id === editExpenseId) ?? null),
+    [state, editExpenseId],
+  );
+
   const firstOverdue = rows.find(
     (row) => row.paidDate === undefined && daysOverdue(row.dueDate, today) > 0,
+  );
+
+  const chaseToday = useMemo(
+    () =>
+      rows
+        .filter((row) => getInvoiceStatus(row, today) === 'overdue')
+        .map((row) => ({ row, days: daysOverdue(row.dueDate, today) }))
+        .sort((a, b) => b.days - a.days || b.row.amount - a.row.amount)
+        .slice(0, 5),
+    [rows, today],
   );
 
   const handleChase = (id: string): void => {
@@ -250,6 +272,20 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
     link.download = 'cashpulse-ca-ledger.csv';
     link.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleEditExpense = (id: string): void => {
+    setEditExpenseId(id);
+  };
+
+  const handleCloseEditExpense = (): void => {
+    setEditExpenseId(null);
+  };
+
+  const handleSaveExpense = (patch: EditExpensePatch): void => {
+    if (editExpense === null) return;
+    updateExpense({ ...editExpense, ...patch });
+    setEditExpenseId(null);
   };
 
   const handleDeleteExpense = (id: string): void => {
@@ -306,11 +342,6 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
   const sectionClass = (section: DashboardSection): string =>
     section === activeSection ? 'cp-animate-in' : 'hidden';
 
-  const handleBottomSelect = (id: string): void => {
-    const section = SECTIONS.find((item) => item.id === id);
-    if (section !== undefined) setActiveSection(section.id);
-  };
-
   const handleTourStep = (id: string): void => {
     const section = TOUR_STEP_SECTIONS[id];
     if (section !== undefined) setActiveSection(section);
@@ -344,6 +375,48 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
         <div id="overview" className={`flex scroll-mt-20 flex-col gap-6 ${sectionClass('overview')}`}>
           <MetricCards state={state} today={today} onSelect={setSelectedMetric} />
           <ActionBanner rows={rows} today={today} onChase={handleChase} />
+          <section aria-labelledby="chase-today-heading" className="cp-card flex flex-col gap-4">
+            <div>
+              <h2 id="chase-today-heading" className="text-base font-semibold text-zinc-50">
+                Chase today
+              </h2>
+              <p className="cp-muted text-xs">Overdue invoices, most urgent first</p>
+            </div>
+            {chaseToday.length === 0 ? (
+              <p className="rounded-xl border border-dashed border-white/10 p-6 text-center text-sm text-zinc-500">
+                No overdue invoices. Nothing to chase today.
+              </p>
+            ) : (
+              <ul className="flex flex-col divide-y divide-white/5">
+                {chaseToday.map(({ row, days }) => (
+                  <li
+                    key={row.id}
+                    className="flex items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-zinc-50">{row.clientName}</p>
+                      <p className="text-xs text-zinc-500">
+                        {days} {days === 1 ? 'day' : 'days'} overdue
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-3">
+                      <span className="text-sm font-semibold tabular-nums text-zinc-50">
+                        {formatINR(row.amount)}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleChase(row.id)}
+                        className="tap-press inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-rose-500/15 px-3 py-1.5 text-xs font-semibold text-rose-300 ring-1 ring-rose-400/20 hover:bg-rose-500/25 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                        Chase
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
         </div>
         <div
           id="safe-to-spend"
@@ -402,7 +475,7 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
             className="flex scroll-mt-20 flex-col gap-3 lg:col-span-2"
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h2 id="invoices-heading" className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+              <h2 id="invoices-heading" className="text-lg font-semibold text-zinc-50">
                 Who owes me
               </h2>
               {activeBucket !== null && (
@@ -425,7 +498,12 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
             />
           </section>
           <div className="flex flex-col gap-6 lg:col-span-1">
-            <ExpensesPanel expenses={state.expenses} today={today} onDelete={handleDeleteExpense} />
+            <ExpensesPanel
+              expenses={state.expenses}
+              today={today}
+              onEdit={handleEditExpense}
+              onDelete={handleDeleteExpense}
+            />
             <ContractorDeferral expenses={state.expenses} />
           </div>
         </div>
@@ -461,6 +539,13 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
           onSave={handleSaveEdit}
         />
 
+        <EditExpenseModal
+          expense={editExpense}
+          open={editExpense !== null}
+          onClose={handleCloseEditExpense}
+          onSave={handleSaveExpense}
+        />
+
         <CreateInvoiceModal
           open={createOpen}
           clients={state.clients}
@@ -477,7 +562,7 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
           onChoosePlan={handleChoosePlan}
         />
 
-        <BottomNav onSelect={handleBottomSelect} />
+        <BottomNav sections={SECTIONS} active={activeSection} onSelect={setActiveSection} />
         <BackToTop />
       </div>
     </>
@@ -487,8 +572,8 @@ function DashboardContent({ today, onChase, onEdit }: DashboardContentProps) {
 /** Placeholder shown until the client-only date exists, so no date-dependent number is rendered from the server. */
 function DashboardSkeleton() {
   const cardClass =
-    'rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900';
-  const valueClass = 'mt-2 text-2xl font-semibold text-zinc-400 dark:text-zinc-600';
+    'rounded-2xl border border-zinc-800 bg-zinc-900 p-5 shadow-sm';
+  const valueClass = 'mt-2 text-2xl font-semibold text-zinc-600';
   const labels = ['Current Cash', 'Total Outstanding', 'Overdue Amount', 'Cash Runway'];
 
   return (
@@ -497,17 +582,17 @@ function DashboardSkeleton() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {labels.map((label) => (
           <div key={label} className={cardClass}>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">{label}</p>
+            <p className="text-xs text-zinc-400">{label}</p>
             <p className={valueClass}>—</p>
           </div>
         ))}
       </div>
       <section className={`flex flex-col gap-4 ${cardClass}`}>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Financial Command Center</h2>
+        <h2 className="text-lg font-semibold text-zinc-50">Financial Command Center</h2>
         <p className={valueClass}>—</p>
       </section>
       <section className={`flex flex-col gap-4 ${cardClass}`}>
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Who owes me</h2>
+        <h2 className="text-lg font-semibold text-zinc-50">Who owes me</h2>
         <p className={valueClass}>—</p>
       </section>
     </div>

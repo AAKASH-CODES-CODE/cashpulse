@@ -19,7 +19,7 @@ const DELAY_PRESETS = [15, 30, 45] as const;
 const WARNING_PREFIX = '⚠️';
 
 const FOCUS_RING =
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-900';
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900';
 
 const TONE_TEXT: Record<DangerLevel, string> = {
   danger: 'text-rose-400',
@@ -147,7 +147,7 @@ export function WhatIfSimulator({
               setCleared(false);
             }}
             disabled={clientOptions.length === 0}
-            className={`rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 ${FOCUS_RING}`}
+            className={`rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 ${FOCUS_RING}`}
           >
             {clientOptions.length === 0 && <option value="">No unpaid invoices</option>}
             {clientOptions.map((c) => (
@@ -157,7 +157,7 @@ export function WhatIfSimulator({
             ))}
           </select>
           <label htmlFor="what-if-delay" className="text-sm text-zinc-300">
-            <span className="font-semibold text-emerald-500 dark:text-emerald-400">{delayDays} days late</span>
+            <span className="font-semibold text-emerald-400">{delayDays} days late</span>
           </label>
           <input
             id="what-if-delay"
@@ -210,7 +210,7 @@ export function WhatIfSimulator({
               setDefaulted(false);
               setCleared(false);
             }}
-            className={`rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 ${FOCUS_RING}`}
+            className={`rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 ${FOCUS_RING}`}
           >
             <option value="">None</option>
             {unpaid.map((inv) => {

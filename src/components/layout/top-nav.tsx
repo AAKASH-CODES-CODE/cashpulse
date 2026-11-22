@@ -1,6 +1,7 @@
 'use client';
 
-import { Download, Plus, RotateCcw, Wallet } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { Download, EllipsisVertical, Plus, RotateCcw, Wallet } from 'lucide-react';
 import type { Plan } from '../../lib/types';
 
 export interface TopNavProps {
@@ -13,6 +14,12 @@ export interface TopNavProps {
 
 export function TopNav({ onNewInvoice, onReset, plan, onOpenPricing, onExportCa }: TopNavProps) {
   const planLabel = plan === 'pro' ? 'Pro' : 'Free plan';
+
+  /** Runs a menu action, then closes the enclosing "More actions" menu. */
+  const runMenuAction = (event: MouseEvent<HTMLButtonElement>, action: () => void): void => {
+    event.currentTarget.closest('details')?.removeAttribute('open');
+    action();
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-zinc-950/70 backdrop-blur-xl">
@@ -42,29 +49,35 @@ export function TopNav({ onNewInvoice, onReset, plan, onOpenPricing, onExportCa 
             {planLabel}
           </button>
 
-          {onExportCa ? (
-            <button
-              type="button"
-              onClick={onExportCa}
-              aria-label="Export CA ledger (CSV)"
-              title="Export CA ledger (CSV)"
-              className="tap-press focus-ring-accent group inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-medium text-zinc-400 hover:bg-white/5 hover:text-zinc-50 cursor-pointer"
+          <details className="relative">
+            <summary
+              aria-label="More actions"
+              title="More actions"
+              className="tap-press cp-focus flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-lg text-zinc-400 hover:bg-white/5 hover:text-zinc-50 [&::-webkit-details-marker]:hidden"
             >
-              <Download className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-y-0.5" aria-hidden="true" />
-              <span className="hidden lg:inline">Export CA ledger (CSV)</span>
-            </button>
-          ) : null}
-
-          <button
-            type="button"
-            onClick={onReset}
-            aria-label="Reset Demo Data"
-            title="Reset Demo Data"
-            className="tap-press focus-ring-accent group inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-medium text-zinc-400 hover:bg-white/5 hover:text-zinc-50 cursor-pointer"
-          >
-            <RotateCcw className="h-4 w-4 transition-transform duration-500 ease-out group-hover:rotate-180 group-active:-rotate-90" aria-hidden="true" />
-            <span className="hidden md:inline">Reset Demo Data</span>
-          </button>
+              <EllipsisVertical className="h-4 w-4" aria-hidden="true" />
+            </summary>
+            <div className="absolute right-0 top-full z-50 mt-2 flex w-56 flex-col gap-1 rounded-xl border border-white/10 bg-zinc-900/95 p-1.5 shadow-2xl shadow-black/40 backdrop-blur">
+              {onExportCa ? (
+                <button
+                  type="button"
+                  onClick={(event) => runMenuAction(event, onExportCa)}
+                  className="tap-press cp-focus flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-zinc-50 cursor-pointer"
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  <span>Export CA ledger (CSV)</span>
+                </button>
+              ) : null}
+              <button
+                type="button"
+                onClick={(event) => runMenuAction(event, onReset)}
+                className="tap-press cp-focus flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-zinc-50 cursor-pointer"
+              >
+                <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                <span>Reset Demo Data</span>
+              </button>
+            </div>
+          </details>
 
           <button
             type="button"
